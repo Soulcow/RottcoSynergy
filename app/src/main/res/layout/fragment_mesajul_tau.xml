@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:id="@+id/ivFeedback"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/feedback" />
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/tvMesajulTau"
+            android:layout_below="@+id/ivFeedback"
+            android:text="Mesajul Tau"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/tvMesajulTau"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="15"
+                android:layout_height="match_parent">
+
+            </View>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="70"
+                android:layout_below="@+id/tvMesajulTau"
+                android:text="Pararea ta ne ajuta sa ne imbunatatim permanent serviciile.\nAsteptam sugestiile tale!"
+                android:gravity="fill_horizontal"
+                android:textColor="#000000"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="15"
+                android:layout_height="match_parent">
+
+            </View>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_weight="70"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etFeedbackUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/shapeusername"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:hint="Nume"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:scrollHorizontally="true" />
+
+            <EditText
+                android:id="@+id/etFeedbackEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etFeedbackUsername"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/shapemail"
+                android:drawablePadding="10dp"
+                android:hint="@string/registration_email"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp" />
+
+            <EditText
+                android:id="@+id/etFeedbackCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etFeedbackEmail"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/companie"
+                android:drawablePadding="10dp"
+                android:hint="Companie(pentru clientii flota)"
+                android:inputType="textPassword"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp" />
+            <EditText
+                android:id="@+id/etFeedbackPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etFeedbackCompany"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/mobile"
+                android:drawablePadding="10dp"
+                android:hint="Numar de telefon"
+                android:inputType="textPassword"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp" />
+
+            <EditText
+                android:id="@+id/etFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/etFeedbackPhone"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/feedbackultau"
+                android:drawablePadding="10dp"
+                android:hint="Feedbackul tau"
+                android:lines="10"
+                android:inputType="textMultiLine"
+                android:paddingBottom="10dp"
+                android:gravity="top"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:textColor="#ffffff"
+                android:id="@+id/bSendFeedback"
+                android:background="#BB001D"
+                android:text="@string/trimite"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="25"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

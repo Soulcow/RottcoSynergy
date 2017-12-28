@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Rottco Synergy</string>
+    <string name="sign_up_question">Nu ai un cont Synergy inca?</string>
+    <string name="sign_up_answer">Sign-up</string>
+    <string name="registration_nickname">Nume sau nickname</string>
+    <string name="registration_email">Adresa de email</string>
+    <string name="registration_password">Alege o parola</string>
+    <string name="welcome">W e l c o m e</string>
+    <string name="loginMail">Adresa de mail</string>
+    <string name="loginParola">Parola</string>
+    <string name="rememberMe">Tine-ma minte</string>
+    <string name="login">LOG-IN</string>
+    <string name="facebookLogin">Facebook Login</string>
+    <string name="facebook_app_id">155206278415789</string>
+    <string name="google_api_key">AIzaSyBnUp89DgH078dSqYWdtA6yVH_9fHbxE6s</string>
+    <string name="fb_login_protocol_scheme">fb155206278415789</string>
+    <string name="app_name_facebook">SYNERGY by rottco</string>
+    <string name="feeling_lazy">Feeling lazy? Import your profile from Facebook</string>
+    <string name="foloseste_fb">Foloseste profilul Facebook</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="trimite">TRIMITE</string>
+
+</resources>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:background="#ff0000">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="80">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10">
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="80">
+
+            <TextView
+                android:id="@+id/tvProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/shapeusername"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:scrollHorizontally="true" />
+
+            <TextView
+                android:id="@+id/tvProfileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProfileName"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/shapemail"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:scrollHorizontally="true" />
+
+            <TextView
+                android:id="@+id/tvProfileMarcaMasina"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProfileEmail"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/transportcaricon"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:scrollHorizontally="true" />
+
+            <TextView
+                android:id="@+id/tvProfileTipMasina"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProfileMarcaMasina"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/transportcaricon"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:scrollHorizontally="true" />
+
+            <TextView
+                android:id="@+id/tvProfileMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProfileTipMasina"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/mobile"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:scrollHorizontally="true" />
+
+            <EditText
+                android:id="@+id/etProfilePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvProfileMobile"
+                android:layout_marginTop="10dp"
+                android:background="#F8F7FB"
+                android:drawableLeft="@drawable/lock"
+                android:drawablePadding="10dp"
+                android:hint="@string/loginParola"
+                android:inputType="textPassword"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10">
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
