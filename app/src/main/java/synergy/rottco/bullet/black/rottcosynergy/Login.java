@@ -118,6 +118,8 @@ public class Login extends Activity {
         bLogin = findViewById(R.id.bLogin);
         tvSignUp = findViewById(R.id.tvSignUp);
 
+        etEmail.setText("boghiu.marius@yahoo.com");
+        etPassword.setText("123");
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

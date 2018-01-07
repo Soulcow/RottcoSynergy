@@ -16,7 +16,7 @@ public class GasStation {
     public String hash;
 
     @ColumnInfo(name = "gas_station")
-    private String gas_station;
+    public String gas_station;
 
     public GasStation(String hash,String gas_station) {
         this.hash = hash;

@@ -1,11 +1,18 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Location;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,12 +24,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +69,11 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
     private Button bLogout;
     private Button bSupport;
 
+
+    private FusedLocationProviderClient mFusedLocationClient;
+    private Location myLocation;
+    ArrayList<ModelGasStation> ceva;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -69,10 +86,46 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return;
+//        }
+
+           /*
+            This is called before initializing the map because the map needs permissions(the cause of the crash)
+            */
+        if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.M ) {
+            checkPermission();
+        }
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            myLocation=location;
+                            Log.e("LOCATION",myLocation.getLatitude()+" "+myLocation.getLongitude());
+                            // Logic to handle location object
+                        }
+                    }
+
+                });
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -156,11 +209,36 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
+
+        DatabaseSingleton dbs = new DatabaseSingleton(Main.this);
+        AppDatabase db = dbs.getDbSingleton();
+        addMarkers(googleMap,db);
+
         GetGasStations(Utils.getAuthKey(),null,null);
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Log.e(TAG,marker.getSnippet());
+                for(int i =0 ;i<ceva.size();i++)
+                    if(ceva.get(i).getName().equals(marker.getSnippet()))
+                    {
+                        Log.e(TAG,"FOUND:" + ceva.get(i).toString());
+                        Fragment fragment = new FragmentUserProfile();
+//        Bundle args = new Bundle();
+//        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+//        fragment.setArguments(args);
+                        // Insert the fragment by replacing any existing fragment
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.content_frame, fragment)
+                                .commit();
+                    }
+
+                return true;
+            }
+        });
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -258,7 +336,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
-    private void GetGasStationInfo(String authKey,String hash)
+    private void GetGasStationInfo(String authKey, final String hash)
     {
         if(client==null)
             client = new OkHttpClient();
@@ -300,7 +378,12 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
                         if(jObject.getString("status").equals("1"))
                         {
 
-                            Log.e(TAG,jObject.toString());
+                            JSONObject gasStationDataJson = new JSONObject(jObject.getString("gas_station_data"));
+                            GasStation gasStation = new GasStation(hash,gasStationDataJson.toString());
+
+                            DatabaseSingleton dbs = new DatabaseSingleton(Main.this);
+                            AppDatabase db = dbs.getDbSingleton();
+                            db.myDao().insertGasStation(gasStation);
 
                         }
                         else
@@ -376,9 +459,26 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
                             {
                                 newHashes.add(new Hashes(jsonArray.getString(i)));
                             }
-                            checkHashes(newHashes);
+                           if(checkHashes(newHashes))
+                           {
+                               for(int i=0;i<newHashes.size();i++)
+                               GetGasStationInfo(Utils.getAuthKey(),newHashes.get(i).getHash());
+                           }
+                           else
+                           {
+                               //nothing
+                               DatabaseSingleton dbs = new DatabaseSingleton(Main.this);
+                               AppDatabase db = dbs.getDbSingleton();
+                               GasStation[] gasStationsList = db.myDao().loadAllGasStations();
+                               for(int i =0;i<gasStationsList.length;i++)
+                                   Log.e(TAG, "HASH:" + gasStationsList[i].getHash() +" all data:"+ gasStationsList[i].getName());
 
-                            GetGasStationInfo(Utils.getAuthKey(),newHashes.get(0).getHash());
+                              ArrayList<ModelGasStation> ceva = BuildAllGasStationsFromDatabase(gasStationsList);
+
+                              for(int i=0;i<ceva.size();i++)
+                                  Log.e(TAG,ceva.get(i).toString());
+                           }
+
 
                         }
                         else
@@ -393,6 +493,37 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
         });
 
     }
+
+    private ArrayList<ModelGasStation> BuildAllGasStationsFromDatabase(GasStation[] gasStationsList) {
+
+        ArrayList<ModelGasStation> gasStations = new ArrayList<>();
+
+        for(int i=0;i<gasStationsList.length;i++)
+        {
+            try {
+                JSONObject jsonObject = new JSONObject(gasStationsList[i].getName());
+                gasStations.add(
+                        new ModelGasStation(
+                                jsonObject.getString("name"),
+                                jsonObject.getString("address"),
+                                jsonObject.getDouble("latitude"),
+                                jsonObject.getDouble("longitude"),
+                                jsonObject.getString("work_hours"),
+                                jsonObject.getString("fleet_cards"),
+                                null,
+                                null,
+                                null
+                        )
+                );
+            } catch (JSONException e) {
+
+                e.printStackTrace();
+            }
+        }
+
+        return gasStations;
+    }
+
     private void Logout()
     {
         if(client==null)
@@ -452,7 +583,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
-    public void checkHashes(ArrayList<Hashes> newHashes)
+    public boolean checkHashes(ArrayList<Hashes> newHashes)
     {
 
         DatabaseSingleton dbs = new DatabaseSingleton(Main.this);
@@ -478,8 +609,15 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             }
         }
 
-        if(rebuildAllHashes)
-            addAllHashes(db,newHashes);
+        if(rebuildAllHashes) {
+            addAllHashes(db, newHashes);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     private void addAllHashes(AppDatabase db, ArrayList<Hashes> newHashes) {
@@ -493,35 +631,35 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
     }
 
 
-    public void checkHashes(ArrayList<Hashes> newHashes)
-    {
-
-        DatabaseSingleton dbs = new DatabaseSingleton(Main.this);
-        AppDatabase db = dbs.getDbSingleton();
-        Hashes[] oldHashes = db.myDao().loadAllHashes();
-
-        boolean rebuildAllHashes = false;
-        for(int i=0;i<newHashes.size();i++)
-        {
-            boolean hashFound = false;
-            for (int j = 0; j < oldHashes.length; j++) {
-                if (newHashes.get(i).getHash().equals(oldHashes[j].getHash())) {
-                    hashFound = true;
-                    Log.e(TAG,"HASH :"+ newHashes.get(i).getHash()+" found");
-                    break;
-
-                }
-            }
-            if(!hashFound) {
-                Log.e(TAG,"HASH :"+ newHashes.get(i).getHash()+" not found");
-                rebuildAllHashes=true;
-                break;
-            }
-        }
-
-        if(rebuildAllHashes)
-            addAllHashes(db,newHashes);
-    }
+//    public void checkHashes(ArrayList<Hashes> newHashes)
+//    {
+//
+//        DatabaseSingleton dbs = new DatabaseSingleton(Main.this);
+//        AppDatabase db = dbs.getDbSingleton();
+//        Hashes[] oldHashes = db.myDao().loadAllHashes();
+//
+//        boolean rebuildAllHashes = false;
+//        for(int i=0;i<newHashes.size();i++)
+//        {
+//            boolean hashFound = false;
+//            for (int j = 0; j < oldHashes.length; j++) {
+//                if (newHashes.get(i).getHash().equals(oldHashes[j].getHash())) {
+//                    hashFound = true;
+//                    Log.e(TAG,"HASH :"+ newHashes.get(i).getHash()+" found");
+//                    break;
+//
+//                }
+//            }
+//            if(!hashFound) {
+//                Log.e(TAG,"HASH :"+ newHashes.get(i).getHash()+" not found");
+//                rebuildAllHashes=true;
+//                break;
+//            }
+//        }
+//
+//        if(rebuildAllHashes)
+//            addAllHashes(db,newHashes);
+//    }
 
     private void addAllGasStations(AppDatabase db, ArrayList<GasStation> gasStations) {
         Log.e("deleteAllGasStations","deleteAllGasStations");
@@ -532,5 +670,62 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             db.myDao().insertGasStation(new GasStation(gasStations.get(i).getHash(),gasStations.get(i).getName()));
         }
     }
+    public void addMarkers(final GoogleMap googleMap, final AppDatabase db) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                GasStation[] gasStationsList = db.myDao().loadAllGasStations();
 
+                ceva = BuildAllGasStationsFromDatabase(gasStationsList);
+                LatLng benzinarie =null;
+                for(int i =0;i<ceva.size();i++)
+                {
+                    benzinarie = new LatLng(ceva.get(i).getLatitude(), ceva.get(i).getLongitude());
+                    final String snippet = ceva.get(i).getName();
+                    final LatLng finalBenzinarie = benzinarie;
+                    Main.this.runOnUiThread(new Runnable(){
+                        public void run(){
+
+                            // create marker
+                            MarkerOptions marker = new MarkerOptions().position(finalBenzinarie).title("Hello Maps").snippet(snippet);
+
+                            // Changing marker icon
+                            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.pinbenzinarie));
+
+                            // adding marker
+                            googleMap.addMarker(marker);
+
+//                            googleMap.addMarker(new MarkerOptions().position(finalBenzinarie)
+//                                    .title("Marker in Sydney"));
+                        }
+                    });
+
+
+                }
+
+                if(benzinarie!=null)
+                {
+                    final LatLng finalBenzinarie1 = benzinarie;
+                    Main.this.runOnUiThread(new Runnable(){
+                        public void run(){
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLng(finalBenzinarie1));
+                        }
+                    });
+                }
+
+                return null;
+            }
+        }.execute();
+    }
+
+    public void checkPermission(){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ){//Can add more as per requirement
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    123);
+        }
+    }
 }

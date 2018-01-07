@@ -32,7 +32,7 @@ public interface MyDao {
     public void insertGasStationList(List<GasStation> gasStationList);
 
     @Query("SELECT * FROM gasstation")
-    public GasStation[] loadAllgasStations();
+    public GasStation[] loadAllGasStations();
 
     @Query("DELETE FROM gasstation")
     public void deleteAllGasStations();
