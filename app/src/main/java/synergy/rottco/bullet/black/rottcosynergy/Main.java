@@ -225,14 +225,19 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
                     if(ceva.get(i).getName().equals(marker.getSnippet()))
                     {
                         Log.e(TAG,"FOUND:" + ceva.get(i).toString());
-                        Fragment fragment = new FragmentUserProfile();
+                        Fragment fragment = new FragmentGasStationDetails();
 //        Bundle args = new Bundle();
 //        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
 //        fragment.setArguments(args);
                         // Insert the fragment by replacing any existing fragment
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("GasStation", marker.getSnippet());
+
                         FragmentManager fragmentManager = getFragmentManager();
+                        fragment.setArguments(bundle);
                         fragmentManager.beginTransaction()
-                                .replace(R.id.content_frame, fragment)
+                                .add(R.id.content_frame, fragment)
                                 .commit();
                     }
 
@@ -502,19 +507,42 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
         {
             try {
                 JSONObject jsonObject = new JSONObject(gasStationsList[i].getName());
-                gasStations.add(
-                        new ModelGasStation(
-                                jsonObject.getString("name"),
-                                jsonObject.getString("address"),
-                                jsonObject.getDouble("latitude"),
-                                jsonObject.getDouble("longitude"),
-                                jsonObject.getString("work_hours"),
-                                jsonObject.getString("fleet_cards"),
-                                null,
-                                null,
-                                null
-                        )
-                );
+                String imageNameUrl ;
+                if(!jsonObject.isNull("image_name"))
+                {
+                    gasStations.add(
+                            new ModelGasStation(
+                                    jsonObject.getString("name"),
+                                    jsonObject.getString("address"),
+                                    jsonObject.getDouble("latitude"),
+                                    jsonObject.getDouble("longitude"),
+                                    jsonObject.getString("work_hours"),
+                                    jsonObject.getString("fleet_cards"),
+                                    jsonObject.getString("image_name"),
+                                    null,
+                                    null,
+                                    null
+                            )
+                    );
+                }
+                else
+                {
+                    gasStations.add(
+                            new ModelGasStation(
+                                    jsonObject.getString("name"),
+                                    jsonObject.getString("address"),
+                                    jsonObject.getDouble("latitude"),
+                                    jsonObject.getDouble("longitude"),
+                                    jsonObject.getString("work_hours"),
+                                    jsonObject.getString("fleet_cards"),
+                                    null,
+                                    null,
+                                    null,
+                                    null
+                            )
+                    );
+                }
+
             } catch (JSONException e) {
 
                 e.printStackTrace();
@@ -533,6 +561,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             Utils.setAuthKey(null);
             startActivity(new Intent(Main.this,Login.class));
             Main.this.finish();
+            return;
         }
 
         Log.e(TAG,Utils.getAuthKey());

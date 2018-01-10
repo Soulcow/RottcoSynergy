@@ -1,18 +1,22 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by boghi on 1/2/2018.
  */
 
-public class ModelGasStation {
+public class ModelGasStation implements Parcelable{
     private String name;
     private String address;
     private double latitude;
     private double longitude;
     private String workHours;
     private String fleetCards;
+    private String imageUrl;
     private ArrayList<String> services;
     private ArrayList<String> fuels;
     private ArrayList<String> cards;
@@ -20,13 +24,22 @@ public class ModelGasStation {
     public ModelGasStation() {
     }
 
-    public ModelGasStation(String name, String address, double latitude, double longitude, String workHours, String fleetCards, ArrayList<String> services, ArrayList<String> fuels, ArrayList<String> cards) {
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public ModelGasStation(String name, String address, double latitude, double longitude, String workHours, String fleetCards,String imageUrl, ArrayList<String> services, ArrayList<String> fuels, ArrayList<String> cards) {
         this.name = name;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.workHours = workHours;
         this.fleetCards = fleetCards;
+        this.imageUrl=imageUrl;
         this.services = services;
         this.fuels = fuels;
         this.cards = cards;
@@ -117,5 +130,58 @@ public class ModelGasStation {
                 ", fuels=" + fuels +
                 ", cards=" + cards +
                 '}';
+    }
+
+    public ModelGasStation(Parcel in) {
+        super();
+        readFromParcel(in);
+    }
+    public static final Parcelable.Creator<ModelGasStation> CREATOR = new Parcelable.Creator<ModelGasStation>() {
+        public ModelGasStation createFromParcel(Parcel in) {
+            return new ModelGasStation(in);
+        }
+
+        public ModelGasStation[] newArray(int size) {
+
+            return new ModelGasStation[size];
+        }
+
+    };
+
+    public void readFromParcel(Parcel in) {
+        address = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        workHours = in.readString();
+        fleetCards= in.readString();
+        services = in.createStringArrayList();
+        fuels= in.createStringArrayList();
+        cards= in.createStringArrayList();
+        /*
+        * private String name;
+    private String address;
+    private double latitude;
+    private double longitude;
+    private String workHours;
+    private String fleetCards;
+    private ArrayList<String> services;
+    private ArrayList<String> fuels;
+    private ArrayList<String> cards;
+        * */
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+//        parcel.writeString(address);
+//        parcel.writeDouble(latitude);
+//        parcel.writeDouble(longitude);
+//        parcel.writeString(wo);
+//        dest.writeInt(Value2);
+//        dest.writeInt(Value3);
     }
 }
