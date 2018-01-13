@@ -3,9 +3,7 @@ package synergy.rottco.bullet.black.rottcosynergy;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-/**
- * Created by boghi on 12/17/2017.
- */
+
 
 public class DatabaseSingleton {
 

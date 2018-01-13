@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="0px"
-        android:layout_weight="28">
+        android:layout_weight="31">
         <ImageView
             android:layout_width="wrap_content"
             android:src="@drawable/logowelcomescreen"
@@ -36,18 +36,18 @@
         android:paddingTop="20dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_weight="31">
+        android:layout_weight="34">
 
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="23">
+            android:layout_weight="9">
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="54">
+            android:layout_weight="82">
             <EditText
                 android:layout_width="match_parent"
                 android:hint="@string/loginMail"
@@ -68,8 +68,10 @@
                 android:layout_marginTop="10dp"
                 android:hint="@string/loginParola"
                 android:inputType="textPassword"
-                android:drawableLeft="@drawable/lock"
-                android:paddingLeft="15dp"
+                android:drawableStart="@drawable/lock"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:drawableEnd="@drawable/eye"
                 android:layout_below="@+id/etEmail"
                 android:paddingTop="10dp"
                 android:id="@+id/etPassword"
@@ -91,7 +93,7 @@
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="23">
+            android:layout_weight="9">
 
         </LinearLayout>
 
@@ -100,18 +102,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="31">
+        android:layout_weight="25">
 
         <RelativeLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="26">
+            android:layout_weight="12">
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="48">
+            android:layout_weight="76">
             <Button
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
@@ -135,12 +137,12 @@
                 <!--/>-->
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
                 android:layout_below="@+id/bLogin"
-                android:layout_marginBottom="30dp" />
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
 
 
 
@@ -149,7 +151,7 @@
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="26">
+            android:layout_weight="12">
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
@@ -166,13 +168,15 @@
             android:paddingBottom="10dp"
             android:paddingRight="5dp"
             android:text="@string/sign_up_question" />
-        <TextView
-            android:id="@+id/tvSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/localTvQuestion"
-            android:layout_toRightOf="@id/localTvQuestion"
-            android:text="@string/sign_up_answer"
-            android:textColor="#ff0000" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvSignUp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignBaseline="@+id/localTvQuestion"-->
+            <!--android:layout_toRightOf="@id/localTvQuestion"-->
+            <!--android:text="@string/sign_up_answer"-->
+            <!--android:textColor="#ff0000" />-->
     </RelativeLayout>
+
+
 </LinearLayout>

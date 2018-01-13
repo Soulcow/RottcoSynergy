@@ -1,10 +1,19 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +26,13 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.UUID;
 
 import okhttp3.Call;
@@ -39,12 +50,26 @@ import okhttp3.Response;
 public class Login extends Activity {
 
     private static String TAG = Login.class.getSimpleName();
+    private Context context = Login.this;
+    private static String UUID = "uuid";
+    private static String EMAIL = "email";
+    private static String PASSWORD = "password";
     private OkHttpClient client = null;
+
+    private static String STATUS = "status";
+    private static int STATUS_OK = 1;
+    private static int STATUS_USER_AUTH_UNKNOWN = 92;
+    private static int STATUS_USER_PASSWORD_INCORRECT = 93;
+    private static int STATUS_USER_DISABLED = 94;
+    private static int STATUS_USER_NOT_FOUND = 95;
+
+    boolean passwordIsHidden=true;
+    private TextView localTvQuestion;
     private EditText etEmail;
     private EditText etPassword;
     private Button bLogin;
     private TextView tvSignUp;
-    private  CallbackManager callbackManager;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +78,15 @@ public class Login extends Activity {
 
         callbackManager = CallbackManager.Factory.create();
 
-
-
+        localTvQuestion = findViewById(R.id.localTvQuestion);
+        localTvQuestion.setText(Html.fromHtml("Nu ai un cont Synergy inca? " + "<font color=\"#BB0020\">" + "Sign-up" + "</font>" )  );
+        localTvQuestion.setOnClickListener(new View.OnClickListener() {
+                        @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, Registration.class);
+                startActivity(intent);
+            }
+        });
         LoginButton  loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
 //        // If using in a fragment
@@ -116,86 +148,176 @@ public class Login extends Activity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         bLogin = findViewById(R.id.bLogin);
-        tvSignUp = findViewById(R.id.tvSignUp);
+        //tvSignUp = findViewById(R.id.tvSignUp);
 
         etEmail.setText("boghiu.marius@yahoo.com");
         etPassword.setText("123");
+
+        etPassword.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+
+                    if(event.getRawX() >= (etPassword.getRight() - etPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        if(passwordIsHidden)
+                        {
+                            etPassword.setTransformationMethod(null);
+                            passwordIsHidden=false;
+                        }
+                        else
+                        {
+                            etPassword.setTransformationMethod(new PasswordTransformationMethod());
+                            passwordIsHidden=true;
+                        }
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+
+        });
+
+
+
+
+
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e(TAG,"clickonBlogin");
-                Login(etEmail.getText().toString(),etPassword.getText().toString());
+
+                ProgressDialog ringProgressDialog;
+                String title ="Login";
+                String message = "Please wait...";
+
+                ringProgressDialog = new ProgressDialog(context,R.style.ProgressDialogStyle);
+                ringProgressDialog.setMessage(message);
+                ringProgressDialog.setTitle(title);
+                ringProgressDialog.setIndeterminate(true);
+                ringProgressDialog.setCancelable(false);
+                Login(ringProgressDialog,etEmail.getText().toString(),etPassword.getText().toString());
             }
         });
 
-        tvSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Login.this, Registration.class);
-                startActivity(intent);
-            }
-        });
+//        tvSignUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Login.this, Registration.class);
+//                startActivity(intent);
+//            }
+//        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-    private void Login(String email,String password)
+    private void Login(final ProgressDialog ringProgressDialog, String email, String password)
     {
+        ringProgressDialog.show();
+
         Log.e(TAG,email);
         Log.e(TAG,password);
         if(client==null)
             client = new OkHttpClient();
 
+        //TODO:UUID ,This must be random?
         RequestBody formBody = new FormBody.Builder()
-                .add("uuid", Utils.getRandomUUID()) //TODO:? This must be random?
-                .add("email", email)
-                .add("password",password)
+                .add(UUID, Utils.getRandomUUID())
+                .add(EMAIL, email)
+                .add(PASSWORD,password)
                 .build();
         Request request = new Request.Builder()
                 .url(Utils.getLoginUrl())
                 .post(formBody)
                 .build();
 
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                ringProgressDialog.dismiss();
                 e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
+                ringProgressDialog.dismiss();
+
                 if (!response.isSuccessful()) {
                     throw new IOException("Unexpected code " + response);
                 } else {
                     // do something wih the result
                     String string = response.body().string();
                     try {
+
                         JSONObject jObject = new JSONObject(string);
-                        Log.e("sadasd",jObject.toString());
+                        Log.e(TAG,jObject.toString());
                         Log.e("asdfgasdf",jObject.getString("status"));
-                        if(jObject.getString("status").equals("1"))
+                        int status = jObject.getInt(STATUS);
+                        if(status == STATUS_OK)
                         {
-                            Log.e("Status","LoginOk");
                             startActivity(new Intent(Login.this,Main.class));
                             Utils.setAuthKey(jObject.getString("authKey"));
                             Login.this.finish();
                         }
+                        else if(status == STATUS_USER_PASSWORD_INCORRECT)
+                        {
+                           //TODO: STATUS_USER_PASSWORD_INCORRECT
+                            showAlert("Login Failed!","Password is incorrect!");
+                        }
+                        else if(status == STATUS_USER_DISABLED)
+                        {
+                            //TODO: STATUS_USER_DISABLED
+                            showAlert("Login Failed!","User is disabled");
+                        }
+                        else if(status == STATUS_USER_NOT_FOUND)
+                        {
+                            Log.e(TAG,"User not found!");
+                            //TODO: Password incorrect;
+                            showAlert("Login Failed!","User not found!");
+                        }
+                        else if(status == STATUS_USER_AUTH_UNKNOWN)
+                        {
+                            //TODO: NU STIU INCA
+                            showAlert("Login Failed!","Authentication unknown!");
+                        }
                         else
                         {
-                            Log.e("Staus","loginFaileD");
+                            //TODO: something has gone wrong;
+                            showAlert("Login Failed!","Something went wrong, please check your internet connection!");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Log.e("MM",string);
                 }
             }
         });
 
     }
 
+    private void showAlert(final String title, final String message)
+    {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.AlertDialogStyle);
+                builder.setTitle(title);
+                builder.setCancelable(false);
+                builder.setMessage(message);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
+
+    }
     private void LoginWithFacebook(String facebookId)
     {
         Log.e(TAG,facebookId);

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Rottco Synergy</string>
-    <string name="sign_up_question">Nu ai un cont Synergy inca?</string>
+    <string name="sign_up_question">Nu ai un cont Synergy inca? Sign-up</string>
     <string name="sign_up_answer">Sign-up</string>
-    <string name="registration_nickname">Nume sau nickname</string>
+    <string name="registration_nickname">Numele si prenumele</string>
     <string name="registration_email">Adresa de email</string>
-    <string name="registration_password">Alege o parola</string>
+    <string name="registration_password">Parola</string>
     <string name="welcome">W e l c o m e</string>
     <string name="loginMail">Adresa de mail</string>
     <string name="loginParola">Parola</string>
