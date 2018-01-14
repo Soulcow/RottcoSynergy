@@ -68,7 +68,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
     //EndDrawer
     private Button bLogout;
     private Button bSupport;
-
+    private GoogleMap mGoogleMap;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private Location myLocation;
@@ -121,7 +121,35 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
                         if (location != null) {
                             myLocation=location;
                             Log.e("LOCATION",myLocation.getLatitude()+" "+myLocation.getLongitude());
-                            // Logic to handle location object
+
+                            final LatLng myLatLng=  new LatLng(location.getLatitude(), location.getLongitude());
+
+
+
+                                final String snippet = "MyLocation";
+
+                                Main.this.runOnUiThread(new Runnable(){
+                                    public void run(){
+
+                                        // create marker
+                                        MarkerOptions marker = new MarkerOptions().position(myLatLng).title("Hello Maps").snippet(snippet);
+
+                                        // Changing marker icon
+                                        marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.myself));
+
+                                        // adding marker
+                                        mGoogleMap.addMarker(marker);
+
+
+                                    }
+                                });
+
+
+
+                        }
+                        else
+                        {
+                            Log.e(TAG,"LastKnowLocation is null");
                         }
                     }
 
@@ -167,19 +195,24 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setTitle("closetitle");
+                //getSupportActionBar().setTitle("closetitle");
+
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("opentitle");
+               // getSupportActionBar().setTitle("opentitle");
             }
         };
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+
 
 
 
@@ -210,11 +243,12 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
 
-
+        mGoogleMap =googleMap;
 
         DatabaseSingleton dbs = new DatabaseSingleton(Main.this);
         AppDatabase db = dbs.getDbSingleton();
         addMarkers(googleMap,db);
+        Log.e(TAG,Utils.getAuthKey()+" this?");
 
         GetGasStations(Utils.getAuthKey(),null,null);
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {

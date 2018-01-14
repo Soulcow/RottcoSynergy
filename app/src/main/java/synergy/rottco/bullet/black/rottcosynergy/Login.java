@@ -7,9 +7,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v13.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -51,9 +55,12 @@ public class Login extends Activity {
 
     private static String TAG = Login.class.getSimpleName();
     private Context context = Login.this;
+    private Activity activity =Login.this;
     private static String UUID = "uuid";
     private static String EMAIL = "email";
     private static String PASSWORD = "password";
+    private static String AUTH_KEY = "authKey";
+    private static String USER_DATA = "userData";
     private OkHttpClient client = null;
 
     private static String STATUS = "status";
@@ -63,6 +70,7 @@ public class Login extends Activity {
     private static int STATUS_USER_DISABLED = 94;
     private static int STATUS_USER_NOT_FOUND = 95;
 
+    final private static int MY_PERMISSIONS_ACCESS_FINE_LOCATION =1000;
     boolean passwordIsHidden=true;
     private TextView localTvQuestion;
     private EditText etEmail;
@@ -75,6 +83,17 @@ public class Login extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            Log.e(TAG,"REQUEST PERMISION");
+            mRequestPermissions();
+        } else{
+            // do something for phones running an SDK before lollipop
+            Log.e(TAG,"DO NOT REQUEST PERMISION");
+        }
+
+
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -208,7 +227,75 @@ public class Login extends Activity {
 //                startActivity(intent);
 //            }
 //        });
+
+
+
+
+
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                    Log.e(TAG,"Granted");
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+
+                    Log.e(TAG,"NOT GRANTED");
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+    private void mRequestPermissions() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(context,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG,"first if  ");
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Log.e(TAG,"IS PERMISION GRANTED? second if explanation  ");
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_ACCESS_FINE_LOCATION);
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+                Log.e(TAG,"IS PERMISION GRANTED? second if no explanation  ");
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_ACCESS_FINE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+        else
+        {
+            Log.e(TAG,"IS PERMISION GRANTED? ELSE");
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -259,8 +346,16 @@ public class Login extends Activity {
                         int status = jObject.getInt(STATUS);
                         if(status == STATUS_OK)
                         {
+                            String authKey = jObject.getString(AUTH_KEY);
+                            String userData = jObject.getString(USER_DATA);
+                            Log.e(TAG,authKey+"this?");
+                            DatabaseSingleton dbs = new DatabaseSingleton(context);
+                            AppDatabase db = dbs.getDbSingleton();
+                            db.myDao().deleteAllUser();
+
+                            db.myDao().insertUser(new User(authKey,userData));
+                            Utils.setAuthKey(authKey);
                             startActivity(new Intent(Login.this,Main.class));
-                            Utils.setAuthKey(jObject.getString("authKey"));
                             Login.this.finish();
                         }
                         else if(status == STATUS_USER_PASSWORD_INCORRECT)

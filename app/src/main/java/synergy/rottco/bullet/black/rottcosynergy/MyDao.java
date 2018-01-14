@@ -37,4 +37,15 @@ public interface MyDao {
     @Query("DELETE FROM gasstation")
     public void deleteAllGasStations();
 
+
+    //User
+    @Query("SELECT * FROM User")
+    public User[] loadAllUsers();
+
+    @Query("DELETE FROM User")
+    public void deleteAllUser();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void insertUser(User user);
+
 }

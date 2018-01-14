@@ -20,5 +20,24 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="trimite">TRIMITE</string>
+    <string name="whatDistance">La ce distanta fata de pozitia ta actuala?</string>
+    <string name="whatServices">Ce tipuri de servicii?</string>
+    <string name="automatDeCafea">Automat de Cafea</string>
+    <string name="automatDeCeai">Automat de Ceai</string>
+    <string name="cafeaProaspat">Cafea Proaspat Prajita</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="sandwichuriPreambalate">Sandwich-uri Preambalate</string>
+    <string name="superMarket">Super Market</string>
+    <string name="nonAlcAndAlc">Vitrina cu Bauturi Alcoolice si Nonalcoolice</string>
+    <string name="whatPayment">Ce tipuri de plati?</string>
+    <string name="Maestro">Maestro</string>
+    <string name="MasterCard">MasterCard</string>
+    <string name="MasterCardGold">MasterCard Gold</string>
+    <string name="MasterCardPlatinum">MasterCard Platinum</string>
 
+    <string name="Visa">Visa</string>
+    <string name="VisaElectron">Visa Electron</string>
+    <string name="VisaGold">Visa Gold</string>
+    <string name="VisaInfinit">Visa Infinit</string>
+    <string name="VisaPlatinum">Visa Platinum</string>
 </resources>
