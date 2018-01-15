@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -269,27 +270,29 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Log.e(TAG,marker.getSnippet());
-                for(int i =0 ;i<ceva.size();i++)
-                    if(ceva.get(i).getName().equals(marker.getSnippet()))
-                    {
-                        Log.e(TAG,"FOUND:" + ceva.get(i).toString());
-                        Fragment fragment = new FragmentGasStationDetails();
-//        Bundle args = new Bundle();
-//        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-//        fragment.setArguments(args);
-                        // Insert the fragment by replacing any existing fragment
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString("GasStation", marker.getSnippet());
-
-                        FragmentManager fragmentManager = getFragmentManager();
-                        fragment.setArguments(bundle);
-                        fragmentManager.beginTransaction()
-                                .add(R.id.content_frame, fragment)
-                                .commit();
-                    }
-
+                Toast.makeText(getApplicationContext(),"Work in progress!",Toast.LENGTH_LONG).show();
                 return true;
+//                for(int i =0 ;i<ceva.size();i++)
+//                    if(ceva.get(i).getName().equals(marker.getSnippet()))
+//                    {
+//                        Log.e(TAG,"FOUND:" + ceva.get(i).toString());
+//                        Fragment fragment = new FragmentGasStationDetails();
+////        Bundle args = new Bundle();
+////        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+////        fragment.setArguments(args);
+//                        // Insert the fragment by replacing any existing fragment
+//
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("GasStation", marker.getSnippet());
+//
+//                        FragmentManager fragmentManager = getFragmentManager();
+//                        fragment.setArguments(bundle);
+//                        fragmentManager.beginTransaction()
+//                                .add(R.id.content_frame, fragment)
+//                                .commit();
+//                    }
+
+               // return true;
             }
         });
     }
@@ -341,6 +344,23 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Mesajul tau"));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Iesi din cont"));
             * */
+            case 3: {
+
+
+                Fragment fragment = new FragmentListStatii();
+
+                mFragmentManager = getFragmentManager();
+                FragmentTransaction ft = mFragmentManager.beginTransaction();
+                ft.addToBackStack("tagOfFragment");
+                ft.add(R.id.content_frame, fragment);
+                ft.commit();
+
+                // Highlight the selected item, update the title, and close the drawer
+                mDrawerList.setItemChecked(position, true);
+                //setTitle(mPlanetTitles[position]);
+                mDrawerLayout.closeDrawer(mDrawerList);
+                break;
+            }
             case 8: {
 
                 Log.e(TAG, "Iesi din cont");

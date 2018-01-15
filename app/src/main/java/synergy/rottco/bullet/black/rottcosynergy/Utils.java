@@ -16,6 +16,7 @@ public class Utils {
     static String UserUrl = "getuserdata";
     static String GetGasStationsUrl ="getgasstations";
     static String GetGasStationInfoUrl ="getgasstationinfo";
+    static String UpdateUser = "updateuser";
 
     static String authKey =null;
     public static String getBaseUrlTest() {
@@ -54,6 +55,9 @@ public class Utils {
         return BaseUrlTest+GetGasStationInfoUrl;
     }
 
+    public static String getUpdateUserUrl() {
+        return BaseUrlTest+UpdateUser;
+    }
     public static String getAuthKey() {
         return authKey;
     }

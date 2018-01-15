@@ -1,6 +1,10 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +40,16 @@ public class FragmentUserProfile extends Fragment {
 
     private static String TAG = FragmentMesajulTau.class.getSimpleName();
     private ModelUser user;
+    private static String UUID = "uuid";
+    private static String EMAIL = "email";
+    private static String PASSWORD = "password";
+    private static String AUTH_KEY = "authKey";
+    private static String USER_DATA = "userData";
 
+    private Button bUpdateUser;
+
+    private static String STATUS = "status";
+    private static int STATUS_OK = 1;
     private TextView tvProfileName;
 
     private TextView tvProfileEmail;
@@ -63,8 +76,39 @@ public class FragmentUserProfile extends Fragment {
         tvProfileTipMasina = view.findViewById(R.id.tvProfileTipMasina);
         tvProfileMobile = view.findViewById(R.id.tvProfileMobile);
         etProfilePassword = view.findViewById(R.id.etProfilePassword);
-
+        bUpdateUser = view.findViewById(R.id.bUpdateUser);
         GetUserProfile();
+        final String firstName,lastName;
+        String[] ceva = splitStringBySpace(tvProfileEmail.getText().toString());
+        if(ceva.length>1)
+        {
+            lastName=ceva[0];
+            firstName=ceva[1];
+        }
+        else
+        {
+            lastName=ceva[0];
+            firstName="";
+        }
+
+
+
+        bUpdateUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProgressDialog ringProgressDialog;
+                String title ="Updating user";
+                String message = "Please wait...";
+
+                ringProgressDialog = new ProgressDialog(getActivity(),R.style.ProgressDialogStyle);
+                ringProgressDialog.setMessage(message);
+                ringProgressDialog.setTitle(title);
+                ringProgressDialog.setIndeterminate(true);
+                ringProgressDialog.setCancelable(false);
+                // private void UpdateUser(final ProgressDialog ringProgressDialog,String firstName,String lastName, String password,String mobile,String carType,String carBrand)
+                UpdateUser(ringProgressDialog,firstName,lastName,etProfilePassword.getText().toString(),tvProfileMobile.getText().toString(),tvProfileTipMasina.getText().toString(),tvProfileMarcaMasina.getText().toString());
+            }
+        });
 //        etFeedbackUsername = view.findViewById(R.id.etFeedbackUsername);
 //        etFeedbackEmail = view.findViewById(R.id.etFeedbackEmail);
 //        etFeedbackCompany = view.findViewById(R.id.etFeedbackCompany);
@@ -203,5 +247,119 @@ public class FragmentUserProfile extends Fragment {
         tvProfileMarcaMasina.setText(user.getCarBrand()+"");
         tvProfileTipMasina.setText(user.getCarType()+"");
         tvProfileMobile.setText(user.getMobile());
+    }
+
+    private void UpdateUser(final ProgressDialog ringProgressDialog,String firstName,String lastName, String password,String mobile,String carType,String carBrand)
+    {
+        ringProgressDialog.show();
+
+
+        if(client==null)
+            client = new OkHttpClient();
+
+        //TODO:UUID ,This must be random?
+        RequestBody formBody = new FormBody.Builder()
+                /*
+                * - authKey
+- firstname
+- lastname
+- uuid
+- password
+- mobile
+- car_brand
+- car_type
+- profile_picture (raw data)
+                * */
+                .add("authKey",Utils.getAuthKey())
+                .add("firstname",firstName)
+                .add("lastname",lastName)
+                .add(UUID, Utils.getRandomUUID())
+                .add(PASSWORD,password)
+                .add("mobile",mobile)
+                .add("car_brand",carBrand)
+                .add("car_type",carType)
+                .build();
+        Request request = new Request.Builder()
+                .url(Utils.getUpdateUserUrl())
+                .post(formBody)
+                .build();
+
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                ringProgressDialog.dismiss();
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                ringProgressDialog.dismiss();
+
+                if (!response.isSuccessful()) {
+                    throw new IOException("Unexpected code " + response);
+                } else {
+                    // do something wih the result
+                    String string = response.body().string();
+                    try {
+
+                        JSONObject jObject = new JSONObject(string);
+                        Log.e(TAG,jObject.toString());
+                        Log.e("asdfgasdf",jObject.getString("status"));
+                        int status = jObject.getInt(STATUS);
+                        if(status == STATUS_OK)
+                        {
+
+                            showAlert("Success!","User Data Saved!");
+//                            String authKey = jObject.getString(AUTH_KEY);
+//                            String userData = jObject.getString(USER_DATA);
+//                            Log.e(TAG,authKey+"this?");
+//                            DatabaseSingleton dbs = new DatabaseSingleton(context);
+//                            AppDatabase db = dbs.getDbSingleton();
+//                            db.myDao().deleteAllUser();
+//
+//                            db.myDao().insertUser(new User(authKey,userData));
+//                            Utils.setAuthKey(authKey);
+//                            startActivity(new Intent(Login.this,Main.class));
+//                            Login.this.finish();
+                        }
+                        else
+                        {
+                            //TODO: something has gone wrong;
+                            showAlert("Login Failed!","Something went wrong, please check your internet connection!");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void showAlert(final String title, final String message)
+    {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AlertDialogStyle);
+                builder.setTitle(title);
+                builder.setCancelable(false);
+                builder.setMessage(message);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
+
+    }
+
+    private String[] splitStringBySpace(String numeSiPrenume)
+    {
+        return numeSiPrenume.split("\\s+");
     }
 }

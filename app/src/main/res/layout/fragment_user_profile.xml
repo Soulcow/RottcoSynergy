@@ -128,9 +128,10 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
                 android:textColor="#ffffff"
-                android:id="@+id/bSendFeedback"
+                android:id="@+id/bUpdateUser"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+
                 android:layout_marginBottom="20dp"
                 android:background="#BB001D"
                 android:layout_alignParentBottom="true"
