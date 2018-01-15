@@ -8,4 +8,5 @@
 
     <color name="dialogCircleColor">#BB0020</color>
     <color name="dialogOkButton">#BB0020</color>
+    <color name="drawerHeader">#E2A59F</color>
 </resources>

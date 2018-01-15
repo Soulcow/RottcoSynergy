@@ -1,16 +1,24 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,7 +71,17 @@ public class FragmentMesajulTau extends Fragment{
             public void onClick(View view) {
                 Log.e(TAG,"SendFeedback");
                 //Registration(etName.getText().toString(),LAST_NAME_NOT_PRESENT,etEmail.getText().toString(),etPassword.getText().toString());
-                SendFeedback(etFeedbackPhone.getText().toString(),
+
+                ProgressDialog ringProgressDialog;
+                String title ="Sending Feedback";
+                String message = "Please wait...";
+
+                ringProgressDialog = new ProgressDialog(getActivity(),R.style.ProgressDialogStyle);
+                ringProgressDialog.setMessage(message);
+                ringProgressDialog.setTitle(title);
+                ringProgressDialog.setIndeterminate(true);
+                ringProgressDialog.setCancelable(false);
+                SendFeedback(ringProgressDialog,etFeedbackPhone.getText().toString(),
                             etFeedbackEmail.getText().toString(),
                             etFeedbackUsername.getText().toString(),
                             etFeedbackCompany.getText().toString(),
@@ -72,14 +90,34 @@ public class FragmentMesajulTau extends Fragment{
             }
         });
 
+//        Toolbar myToolbar = (Toolbar) view.findViewById(R.id.toolbar_mesajul_tau);
+//        Toolbar myToolbal =(Toolbar)((AppCompatActivity)getActivity()).getSupportActionBar();
+        ImageView ivBack = view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((AppCompatActivity)getActivity()).onBackPressed();
+            }
+        });
+        //Toolbar myToolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
+
+
+//        toolbarTitle.setText("Feedback");
         return view;
     }
 
-    private void SendFeedback(String mobile,String email,String name,String company,String message)
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
+    }
+
+    private void SendFeedback(final ProgressDialog ringProgressDialog, String mobile, String email, String name, String company, String message)
     {
 //        Log.e(TAG,email);
 //        Log.e(TAG,password);
-
+        ringProgressDialog.show();
         Log.e(TAG,mobile);
         Log.e(TAG,email);
         Log.e(TAG,name);
@@ -105,11 +143,13 @@ public class FragmentMesajulTau extends Fragment{
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                ringProgressDialog.dismiss();
                 e.printStackTrace();
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
+                ringProgressDialog.dismiss();
                 if (!response.isSuccessful()) {
                     throw new IOException("Unexpected code " + response);
                 } else {
@@ -119,8 +159,11 @@ public class FragmentMesajulTau extends Fragment{
                         JSONObject jObject = new JSONObject(string);
                         Log.e("sadasd",jObject.toString());
                         Log.e("asdfgasdf",jObject.getString("status"));
+
+
                         if(jObject.getString("status").equals("1"))
                         {
+                            showAlert("Succes","Feedback was sent succesfuly!");
                             Log.e("Status","LoginOk");
 //                            startActivity(new Intent(Login.this,Main.class));
 //                            Utils.setAuthKey(jObject.getString("authKey"));
@@ -128,6 +171,7 @@ public class FragmentMesajulTau extends Fragment{
                         }
                         else
                         {
+                            showAlert("Fail","Feedback was not sent succesfuly! Maybe some fields are missing.");
                             Log.e("Staus","loginFaileD");
                         }
                     } catch (JSONException e) {
@@ -139,4 +183,25 @@ public class FragmentMesajulTau extends Fragment{
         });
 
     }
+    private void showAlert(final String title, final String message)
+    {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AlertDialogStyle);
+                builder.setTitle(title);
+                builder.setCancelable(false);
+                builder.setMessage(message);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
+
+    }
+
 }

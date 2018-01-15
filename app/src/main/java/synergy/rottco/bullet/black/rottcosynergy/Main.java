@@ -3,6 +3,7 @@ package synergy.rottco.bullet.black.rottcosynergy;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -73,7 +75,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationClient;
     private Location myLocation;
     ArrayList<ModelGasStation> ceva;
-
+    FragmentManager mFragmentManager;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -141,6 +143,16 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
                                         mGoogleMap.addMarker(marker);
 
 
+                                      //  mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 13));
+                                        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 12.0f));
+//                                        CameraPosition cameraPosition = new CameraPosition.Builder()
+//                                                .target(myLatLng)      // Sets the center of the map to location user
+//                                                .zoom(19).build();
+//                                        // Sets the zoom
+////                                                .bearing(90)                // Sets the orientation of the camera to east
+////                                                .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+////                                               .build() ;                   // Creates a CameraPosition from the builder
+//                                        mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                                     }
                                 });
 
@@ -167,13 +179,15 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
 
 
         dataSource = new ArrayList<>();
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.TITLE,"SYNERGY"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.IMAGE,null));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.HEADER,"BENZINARII:"));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Statii de alimentare"));
-        dataSource.add(new ModelDrawerItems(ModelDrawerItems.EMPTY,""));
+//        dataSource.add(new ModelDrawerItems(ModelDrawerItems.EMPTY,""));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.HEADER,"INFO"));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Noutati"));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Stiati ca?"));
-        dataSource.add(new ModelDrawerItems(ModelDrawerItems.EMPTY,""));
+//        dataSource.add(new ModelDrawerItems(ModelDrawerItems.EMPTY,""));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.HEADER,"GENERALE"));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Profilul meu"));
         dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Despre Energy Rottco"));
@@ -308,6 +322,25 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
 //        mDrawerLayout.closeDrawer(mDrawerList);
 
         switch (position) {
+            /*
+            *  dataSource.add(new ModelDrawerItems(ModelDrawerItems.TITLE,"SYNERGY"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.IMAGE,null));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.HEADER,"BENZINARII:"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Statii de alimentare"));
+//        dataSource.add(new ModelDrawerItems(ModelDrawerItems.EMPTY,""));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.HEADER,"INFO"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Noutati"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Stiati ca?"));
+//        dataSource.add(new ModelDrawerItems(ModelDrawerItems.EMPTY,""));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.HEADER,"GENERALE"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Profilul meu"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Despre Energy Rottco"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Contact"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Termeni si conditii"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Intrebari frecvente"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Mesajul tau"));
+        dataSource.add(new ModelDrawerItems(ModelDrawerItems.LIST_ITEM,"Iesi din cont"));
+            * */
             case 8: {
 
                 Log.e(TAG, "Iesi din cont");
@@ -318,9 +351,14 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
 //        fragment.setArguments(args);
                 // Insert the fragment by replacing any existing fragment
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment)
-                        .commit();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.content_frame, fragment)
+//                        .commit();
+                mFragmentManager = getFragmentManager();
+                FragmentTransaction ft = mFragmentManager.beginTransaction();
+                ft.addToBackStack("tagOfFragment");
+                ft.add(R.id.content_frame, fragment);
+                ft.commit();
 
                 // Highlight the selected item, update the title, and close the drawer
                 mDrawerList.setItemChecked(position, true);
@@ -337,9 +375,16 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
 //        fragment.setArguments(args);
                 // Insert the fragment by replacing any existing fragment
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment)
-                        .commit();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.content_frame, fragment)
+//                        .commit();
+
+
+                mFragmentManager = getFragmentManager();
+                FragmentTransaction ft = mFragmentManager.beginTransaction();
+                ft.addToBackStack("tagOfFragment");
+                ft.add(R.id.content_frame, fragment);
+                ft.commit();
 
                 // Highlight the selected item, update the title, and close the drawer
                 mDrawerList.setItemChecked(position, true);
@@ -355,10 +400,14 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
 //        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
 //        fragment.setArguments(args);
                 // Insert the fragment by replacing any existing fragment
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment)
-                        .commit();
+                mFragmentManager = getFragmentManager();
+                FragmentTransaction ft = mFragmentManager.beginTransaction();
+                ft.addToBackStack("tagOfFragment");
+                ft.add(R.id.content_frame, fragment);
+                ft.commit();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.content_frame, fragment)
+//                        .commit();
 
                 // Highlight the selected item, update the title, and close the drawer
                 mDrawerList.setItemChecked(position, true);
@@ -374,7 +423,13 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             }
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        Main.this.getSupportActionBar().show();
+        if (mFragmentManager.getBackStackEntryCount() > 0)
+            mFragmentManager.popBackStackImmediate();
+        else super.onBackPressed();
+    }
     private void GetGasStationInfo(String authKey, final String hash)
     {
         if(client==null)

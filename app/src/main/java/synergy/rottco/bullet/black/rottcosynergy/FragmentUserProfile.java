@@ -3,12 +3,16 @@ package synergy.rottco.bullet.black.rottcosynergy;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -36,11 +40,11 @@ public class FragmentUserProfile extends Fragment {
     private TextView tvProfileName;
 
     private TextView tvProfileEmail;
-    private TextView tvProfileMarcaMasina;
-    private TextView tvProfileTipMasina;
-    private TextView tvProfileMobile;
+    private EditText tvProfileMarcaMasina;
+    private EditText tvProfileTipMasina;
+    private EditText tvProfileMobile;
     private EditText etProfilePassword;
-
+    private boolean passwordIsHidden=true;
 //    private Button bSendFeedback;
 
     private OkHttpClient client = null;
@@ -83,9 +87,47 @@ public class FragmentUserProfile extends Fragment {
 //            }
 //        });
 
+        ImageView ivBack = view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((AppCompatActivity)getActivity()).onBackPressed();
+            }
+        });
+        etProfilePassword.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+
+                    if(event.getRawX() >= (etProfilePassword.getRight() - etProfilePassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        if(passwordIsHidden)
+                        {
+                            etProfilePassword.setTransformationMethod(null);
+                            passwordIsHidden=false;
+                        }
+                        else
+                        {
+                            etProfilePassword.setTransformationMethod(new PasswordTransformationMethod());
+                            passwordIsHidden=true;
+                        }
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+
+        });
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
+    }
     private void GetUserProfile()
     {
         if(client==null)
@@ -129,8 +171,13 @@ public class FragmentUserProfile extends Fragment {
                                     userData.getString("car_type"),
                                     userData.getString("profile_picture")
                             );
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    DisplayProfileData(user);
+                                }
+                            });
 
-                            DisplayProfileData(user);
                             Log.e(TAG,user.toString());
                             Log.e(TAG, userData.toString());
 //                            startActivity(new Intent(Login.this,Main.class));

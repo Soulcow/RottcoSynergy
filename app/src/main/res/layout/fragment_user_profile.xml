@@ -5,13 +5,7 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20"
-        android:background="#ff0000">
-
-    </LinearLayout>
+    <include layout="@layout/toolbar_profilul_meu" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,14 +15,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="10">
+            android:layout_weight="9">
 
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="80">
+            android:layout_weight="82">
 
             <TextView
                 android:id="@+id/tvProfileName"
@@ -62,7 +56,7 @@
                 android:paddingTop="10dp"
                 android:scrollHorizontally="true" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvProfileMarcaMasina"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,7 +73,7 @@
                 android:paddingTop="10dp"
                 android:scrollHorizontally="true" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvProfileTipMasina"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +90,7 @@
                 android:paddingTop="10dp"
                 android:scrollHorizontally="true" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvProfileMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -117,8 +111,10 @@
                 android:id="@+id/etProfilePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/eye"
                 android:layout_below="@+id/tvProfileMobile"
                 android:layout_marginTop="10dp"
+                android:paddingEnd="15dp"
                 android:background="#F8F7FB"
                 android:drawableLeft="@drawable/lock"
                 android:drawablePadding="10dp"
@@ -127,12 +123,25 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
                 android:paddingTop="10dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:textColor="#ffffff"
+                android:id="@+id/bSendFeedback"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="#BB001D"
+                android:layout_alignParentBottom="true"
+                android:text="@string/trimite"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="10">
+            android:layout_weight="9">
 
         </LinearLayout>
     </LinearLayout>

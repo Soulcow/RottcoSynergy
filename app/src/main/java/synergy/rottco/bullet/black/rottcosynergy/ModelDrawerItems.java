@@ -5,7 +5,8 @@ package synergy.rottco.bullet.black.rottcosynergy;
  */
 
 public class ModelDrawerItems {
-
+    public static int TITLE =-3;
+    public static int IMAGE =-2;
     public static int HEADER =0;
     public static int LIST_ITEM =1;
     public static int EMPTY =2;

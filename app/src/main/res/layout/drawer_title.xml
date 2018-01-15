@@ -5,14 +5,17 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvDrawerListItem"
+        android:id="@+id/tvDrawerTitle"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:paddingStart="15dp"
-        android:layout_marginStart="10dp"
         android:paddingEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="3dp"
         android:textColor="#ffffff"
         android:textStyle="bold"
+        android:text="SYNERGY"
+        android:textSize="22sp"
         android:gravity="center_vertical">
 
     </TextView>
