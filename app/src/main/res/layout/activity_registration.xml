@@ -128,7 +128,7 @@
                 android:layout_marginTop="20dp"
                 android:textColor="#ffffff"
                 android:id="@+id/bSendRegistration"
-                android:background="#BB001D"
+                android:background="@drawable/button_bg_rounded_corners"
                 android:text="@string/sign_up_answer"
                 android:layout_height="wrap_content" />
         </LinearLayout>

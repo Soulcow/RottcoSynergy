@@ -40,4 +40,32 @@
     <string name="VisaGold">Visa Gold</string>
     <string name="VisaInfinit">Visa Infinit</string>
     <string name="VisaPlatinum">Visa Platinum</string>
+    <string name="supportTitle">S.C. ROTTCO CONSULT S.R.L</string>
+    <string name="contactTitle">Contact</string>
+    <string name="strada">Str. Erou Iancu Nicolae, Nr 154 D, Loc. Voluntari, Jud. Ilfov</string>
+    <string name="punctDeLucru">Punct de lucru:</string>
+    <string name="email">E-mail:</string>
+    <string name="emailAddress">office@rottco.ro</string>
+
+    <string name="my_link"><a href="http://somesite.com/">Click me!</a></string>
+    <string name="tel">Tel:</string>
+    <string name="telNumber">021/232 09 50</string>
+    <string name="faxOne">Fax:</string>
+    <string name="faxNumberOne">021/232 09 52</string>
+    <string name="faxTwo">Fax:</string>
+    <string name="faxNumberTwo">0372/87 41 27</string>
+    <string name="departamentDeVanzari">Departamentul Vanzari:</string>
+    <string name="ionut">Ionut Dragan - Director Vanzari</string>
+    <string name="telNumberIonut">0722.553.450</string>
+    <string name="emailAddressIonut">ionut.dragan@rottco.ro</string>
+    <string name="radu">Radu Dragan - Director zonal Vanzari</string>
+    <string name="telNumberRadu">0722.553.536</string>
+    <string name="emailAddressRadu">radu.dragan@rottco.ro</string>
+
+
+    <string name="andrei">Andrei Sima - Director zonal Vanzari</string>
+    <string name="telNumberAndrei">0722.250.736</string>
+    <string name="emailAddressAndrei">andrei.sima@rottco.ro</string>
+    <string name="salveaza">SALVEAZA</string>
+
 </resources>

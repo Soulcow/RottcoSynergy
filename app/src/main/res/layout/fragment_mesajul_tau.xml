@@ -187,7 +187,7 @@
                     android:textColor="#ffffff"
                     android:id="@+id/bSendFeedback"
                     android:layout_marginBottom="20dp"
-                    android:background="#BB001D"
+                    android:background="@drawable/button_bg_rounded_corners"
                     android:text="@string/trimite"
                     android:layout_height="wrap_content" />
             </LinearLayout>

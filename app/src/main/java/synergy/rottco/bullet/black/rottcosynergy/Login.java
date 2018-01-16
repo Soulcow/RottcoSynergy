@@ -61,14 +61,24 @@ public class Login extends Activity {
     private static String PASSWORD = "password";
     private static String AUTH_KEY = "authKey";
     private static String USER_DATA = "userData";
+    private static String MESSAGE ="message";
+    private static String SERVER_FACEBOOK_ID="facebook_id";
+    private static String FIRST_NAME = "firstname";
+    private static String LAST_NAME = "lastname";
+
     private OkHttpClient client = null;
 
+    private static String FACEBOOK_LAST_NAME ="last_name";
+    private static String FACEBOOK_FIRST_NAME ="first_name";
+    private static String FACEBOOK_ID="id";
+    private static String FACEBOOK_EMAIL="email";
     private static String STATUS = "status";
     private static int STATUS_OK = 1;
     private static int STATUS_USER_AUTH_UNKNOWN = 92;
     private static int STATUS_USER_PASSWORD_INCORRECT = 93;
     private static int STATUS_USER_DISABLED = 94;
     private static int STATUS_USER_NOT_FOUND = 95;
+    private static int STATUS_EMAIL_ALLREADY_REGISTERED = 97;
 
     final private static int MY_PERMISSIONS_ACCESS_FINE_LOCATION =1000;
     boolean passwordIsHidden=true;
@@ -130,16 +140,22 @@ public class Login extends Activity {
                                     // handle error
                                 } else {
 
-                                    String user_lastname = me.optString("last_name");
-                                    String user_firstname = me.optString("first_name");
-                                    String user_email =response.getJSONObject().optString("email");
-                                    Log.e(TAG,user_lastname);
-                                    Log.e(TAG,user_firstname);
-                                    Log.e(TAG,user_email);
-//                                    lastname.setText(user_lastname);
-//                                    name.setText(user_firstname);
-//                                    email.setText(user_email);
+                                    String facebookLastName = me.optString(FACEBOOK_LAST_NAME);
+                                    String facebookFirstName = me.optString(FACEBOOK_FIRST_NAME);
+                                    String facebookEmail =response.getJSONObject().optString(FACEBOOK_EMAIL);
+                                    String facebookId =response.getJSONObject().optString(FACEBOOK_ID);
 
+
+                                    ProgressDialog ringProgressDialog;
+                                    String title ="Login";
+                                    String message = "Please wait...";
+
+                                    ringProgressDialog = new ProgressDialog(context,R.style.ProgressDialogStyle);
+                                    ringProgressDialog.setMessage(message);
+                                    ringProgressDialog.setTitle(title);
+                                    ringProgressDialog.setIndeterminate(true);
+                                    ringProgressDialog.setCancelable(false);
+                                    LoginWithFacebook(ringProgressDialog,facebookId,facebookEmail,facebookFirstName,facebookLastName);
                                 }
                             }
                         });
@@ -148,7 +164,6 @@ public class Login extends Activity {
                 parameters.putString("fields", "last_name,first_name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
-                //LoginWithFacebook(loginResult.getAccessToken().getUserId().toString());
             }
 
             @Override
@@ -305,8 +320,6 @@ public class Login extends Activity {
     {
         ringProgressDialog.show();
 
-        Log.e(TAG,email);
-        Log.e(TAG,password);
         if(client==null)
             client = new OkHttpClient();
 
@@ -335,7 +348,9 @@ public class Login extends Activity {
 
                 if (!response.isSuccessful()) {
                     throw new IOException("Unexpected code " + response);
-                } else {
+                }
+                else
+                {
                     // do something wih the result
                     String string = response.body().string();
                     try {
@@ -413,15 +428,19 @@ public class Login extends Activity {
         });
 
     }
-    private void LoginWithFacebook(String facebookId)
+    private void LoginWithFacebook(final ProgressDialog ringProgressDialog,String facebookId, String facebookEmail, String facebookFirstName, String facebookLastName)
     {
-        Log.e(TAG,facebookId);
+        ringProgressDialog.show();
         if(client==null)
             client = new OkHttpClient();
 
+        //TODO:UUID ,This must be random?
         RequestBody formBody = new FormBody.Builder()
-                .add("uuid", Utils.getRandomUUID()) //TODO:? This must be random?
-                .add("facebook_id", facebookId)
+                .add(UUID, Utils.getRandomUUID())
+                .add(FIRST_NAME, facebookFirstName)
+                .add(LAST_NAME, facebookLastName)
+                .add(EMAIL,facebookEmail)
+                .add(SERVER_FACEBOOK_ID,facebookId)
                 .build();
         Request request = new Request.Builder()
                 .url(Utils.getLoginUrl())
@@ -432,34 +451,73 @@ public class Login extends Activity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                ringProgressDialog.show();
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                if (!response.isSuccessful()) {
+                ringProgressDialog.dismiss();
+                if (!response.isSuccessful())
+                {
                     throw new IOException("Unexpected code " + response);
-                } else {
+                }
+                {
                     // do something wih the result
                     String string = response.body().string();
                     try {
+
                         JSONObject jObject = new JSONObject(string);
-                        Log.e("sadasd",jObject.toString());
+                        Log.e(TAG,jObject.toString());
                         Log.e("asdfgasdf",jObject.getString("status"));
-                        if(jObject.getString("status").equals("1"))
+                        int status = jObject.getInt(STATUS);
+                        if(status == STATUS_OK)
                         {
-                            Log.e("Status","LoginOk");
+                            String authKey = jObject.getString(AUTH_KEY);
+                            String userData = jObject.getString(USER_DATA);
+                            Log.e(TAG,authKey+"this?");
+                            DatabaseSingleton dbs = new DatabaseSingleton(context);
+                            AppDatabase db = dbs.getDbSingleton();
+                            db.myDao().deleteAllUser();
+
+                            db.myDao().insertUser(new User(authKey,userData));
+                            Utils.setAuthKey(authKey);
                             startActivity(new Intent(Login.this,Main.class));
-                            Utils.setAuthKey(jObject.getString("authKey"));
                             Login.this.finish();
+                        }
+                        else if(status == STATUS_USER_PASSWORD_INCORRECT)
+                        {
+                            //TODO: STATUS_USER_PASSWORD_INCORRECT
+                            showAlert("Login Failed!","Password is incorrect!");
+                        }
+                        else if(status == STATUS_USER_DISABLED)
+                        {
+                            //TODO: STATUS_USER_DISABLED
+                            showAlert("Login Failed!","User is disabled");
+                        }
+                        else if(status == STATUS_USER_NOT_FOUND)
+                        {
+                            Log.e(TAG,"User not found!");
+                            //TODO: Password incorrect;
+                            showAlert("Login Failed!","User not found!");
+                        }
+                        else if(status == STATUS_USER_AUTH_UNKNOWN)
+                        {
+                            //TODO: NU STIU INCA
+                            showAlert("Login Failed!","Authentication unknown!");
+                        }
+                        else if(status == STATUS_EMAIL_ALLREADY_REGISTERED)
+                        {
+                            String message = jObject.getString(MESSAGE);
+                            showAlert("Login Failed!",message);
                         }
                         else
                         {
-                            Log.e("Staus","loginFaileD");
+                            //TODO: something has gone wrong;
+                            showAlert("Login Failed!","Something went wrong, please check your internet connection!");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Log.e("MM",string);
                 }
             }
         });

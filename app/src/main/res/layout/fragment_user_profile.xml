@@ -133,9 +133,9 @@
                 android:layout_marginEnd="10dp"
 
                 android:layout_marginBottom="20dp"
-                android:background="#BB001D"
+                android:background="@drawable/button_bg_rounded_corners"
                 android:layout_alignParentBottom="true"
-                android:text="@string/trimite"
+                android:text="@string/salveaza"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 

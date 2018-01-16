@@ -18,7 +18,7 @@ public class FragmentSupport extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_support,container, false);
+        View view = inflater.inflate(R.layout.fragment_support,container, false);
         ImageView ivBack = view.findViewById(R.id.ivBack);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
