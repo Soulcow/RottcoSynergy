@@ -3,9 +3,173 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/bTab3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+ <LinearLayout
+     android:layout_width="wrap_content"
+     android:layout_margin="5dp"
+     android:orientation="horizontal"
+     android:background="@drawable/platirectangle"
+
+     android:layout_height="wrap_content">
+     <ImageView
+         android:layout_width="wrap_content"
+         android:src="@drawable/visa"
+         android:padding="20dp"
+         android:layout_height="wrap_content" />
+     <TextView
+         android:layout_width="wrap_content"
+         android:padding="20dp"
+         android:gravity="center"
+         android:text="Visa"
+         android:layout_height="wrap_content" />
+
+ </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/platirectangle"
+
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/visa"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="@string/VisaElectron"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/platirectangle"
+
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/cardbancar"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="@string/Maestro"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/platirectangle"
+
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/mastercard"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="@string/MasterCard"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/platirectangle"
+
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/mastercardelectronic"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="MasterCard Electronic"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/platirectangle"
+
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/cardbancar"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="Card Bancar"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/platirectangle"
+
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/rottcosynergycard"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="Rottco Synergy"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:background="@drawable/platirectangle"
+
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/m34410moneybill"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="20dp"
+            android:gravity="center"
+            android:text="Cash"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>

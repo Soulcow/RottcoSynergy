@@ -2,10 +2,6 @@ package synergy.rottco.bullet.black.rottcosynergy;
 
 import java.util.UUID;
 
-/**
- * Created by boghi on 12/4/2017.
- */
-
 public class Utils {
     static String BaseUrlTest = "http://backend.rottco.ro/apiv1/";
     static String BaseUrlLive = "TODO:";

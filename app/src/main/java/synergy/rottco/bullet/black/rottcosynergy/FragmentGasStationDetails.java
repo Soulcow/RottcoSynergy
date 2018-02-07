@@ -1,29 +1,32 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
 
+
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -40,9 +43,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * Created by boghi on 1/3/2018.
- */
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FragmentGasStationDetails extends Fragment {
 
@@ -50,11 +51,17 @@ public class FragmentGasStationDetails extends Fragment {
     private ViewPager viewPager;
 
     private static String TAG = FragmentGasStationDetails.class.getSimpleName();
+    private static final String WAZE_PACKAGE_NAME="com.waze";
+    private static final String TAB_1_NAME="Produse & Servicii";
+    private static final String TAB_2_NAME="Contact";
+    private static final String TAB_3_NAME="Plati";
+    private static final String TAB_4_NAME="Promotii";
     private ModelUser user;
     ArrayList<ModelGasStation> ceva;
     private TextView tvFGSDname;
     private ImageView ivImageUrl;
-
+    private ImageView ivBack;
+    private ImageView ivNavigation;
     private ViewPager mViewPager;
 
     private TextView tvProfileEmail;
@@ -78,6 +85,14 @@ public class FragmentGasStationDetails extends Fragment {
 
         tvFGSDname = view.findViewById(R.id.tvFGSDname);
         ivImageUrl = view.findViewById(R.id.ivImageUrl);
+        ivNavigation = view.findViewById(R.id.ivNavigation);
+        ivBack= view.findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((AppCompatActivity)getActivity()).onBackPressed();
+            }
+        });
 //        tvProfileName = view.findViewById(R.id.tvProfileName);
 //        tvProfileEmail = view.findViewById(R.id.tvProfileEmail);
 //        tvProfileMarcaMasina = view.findViewById(R.id.tvProfileMarcaMasina);
@@ -96,13 +111,16 @@ public class FragmentGasStationDetails extends Fragment {
 
 
 
+//
+//        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getFragmentManager());
+//
+//        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getFragmentManager());
+//        viewPager.setBackgroundColor(Color.BLACK);
 
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        setupViewPager(viewPager);
-        TabLayout mTabLayout = (TabLayout) view.findViewById(R.id.pager_header);
-        mTabLayout.setupWithViewPager(viewPager);
+
+//        TabLayout mTabLayout = (TabLayout) view.findViewById(R.id.pager_header);
+//        mTabLayout.setupWithViewPager(viewPager);
         /*
         * // Locate the viewpager in activity_main.xml
 
@@ -117,6 +135,8 @@ public class FragmentGasStationDetails extends Fragment {
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.pager_header);
         mTabLayout.setupWithViewPager(viewPager);
         * */
+
+        setupViewPager(view);
         return view;
     }
 
@@ -152,9 +172,9 @@ public class FragmentGasStationDetails extends Fragment {
                                     jsonObject.getString("work_hours"),
                                     jsonObject.getString("fleet_cards"),
                                     jsonObject.getString("image_name"),
-                                    null,
-                                    null,
-                                    null
+                                    jsonObject.getString("services"),
+                                    jsonObject.getString("fuels"),
+                                    jsonObject.getString("cards")
                             )
                     );
                 }
@@ -169,9 +189,9 @@ public class FragmentGasStationDetails extends Fragment {
                                     jsonObject.getString("work_hours"),
                                     jsonObject.getString("fleet_cards"),
                                     null,
-                                    null,
-                                    null,
-                                    null
+                                    jsonObject.getString("services"),
+                                    jsonObject.getString("fuels"),
+                                    jsonObject.getString("cards")
                             )
                     );
                 }
@@ -248,19 +268,52 @@ public class FragmentGasStationDetails extends Fragment {
             }
         });
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
-    private void setupViewPager(ViewPager viewPager)
+    }
+    private void setupViewPager(View view)
     {
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getActivity().getFragmentManager());
- adapter.addFragment(new Tab1Fragment(),"Tab1");
-        adapter.addFragment(new Tab2Fragment(),"Tab2");
+//        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getActivity().getFragmentManager());
+//        adapter.addFragment(new Tab1Fragment(),TAB_1_NAME);
+//        adapter.addFragment(new Tab2Fragment(),TAB_2_NAME);
+//        adapter.addFragment(new Tab3Fragment(),TAB_3_NAME);
+//        adapter.addFragment(new Tab4Fragment(),TAB_4_NAME);
+//        viewPager.setAdapter(adapter);
 
-        adapter.addFragment(new Tab3Fragment(),"Tab3");
-        adapter.addFragment(new Tab4Fragment(),"Tab4");
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.pager_header);
+        tabLayout.addTab(tabLayout.newTab().setText(TAB_1_NAME));
+        tabLayout.addTab(tabLayout.newTab().setText(TAB_2_NAME));
+        tabLayout.addTab(tabLayout.newTab().setText(TAB_3_NAME));
+        tabLayout.addTab(tabLayout.newTab().setText(TAB_4_NAME));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
+        final SectionsPagerAdapter adapter = new SectionsPagerAdapter(getActivity().getFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
     }
+
     private void DisplayProfileData(ModelUser user) {
         tvProfileEmail.setText(user.getEmail());
 
@@ -307,9 +360,13 @@ public class FragmentGasStationDetails extends Fragment {
                                     .load(ceva.get(i).getImageUrl())
 //                                    .fit().centerCrop()
                                     .into(ivImageUrl);
+
+                            ivNavigation.setOnClickListener(openWazeNavigation(ceva.get(i).getLatitude(),ceva.get(i).getLongitude()));
                         }
 
                 }
+
+
             });
 
             return null;
@@ -322,6 +379,79 @@ public class FragmentGasStationDetails extends Fragment {
             }
             super.onPostExecute(aVoid);
 
+        }
+    }
+
+
+    private View.OnClickListener openWazeNavigation(final double latitude, final double longitude) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isAppInstalled = appInstalledOrNot(WAZE_PACKAGE_NAME);
+
+                if(isAppInstalled)
+                {
+                String uri = "waze://?ll="+latitude+", "+longitude+"&navigate=yes";
+                startActivity(new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(uri)));
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Waze is not installed on this device!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        };
+    }
+
+    private boolean appInstalledOrNot(String packageName) {
+        PackageManager pm = getActivity().getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    public void wrapTabIndicatorToTitle(TabLayout tabLayout, int externalMargin, int internalMargin) {
+        View tabStrip = tabLayout.getChildAt(0);
+        if (tabStrip instanceof ViewGroup) {
+            ViewGroup tabStripGroup = (ViewGroup) tabStrip;
+            int childCount = ((ViewGroup) tabStrip).getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View tabView = tabStripGroup.getChildAt(i);
+                //set minimum width to 0 for instead for small texts, indicator is not wrapped as expected
+                tabView.setMinimumWidth(0);
+                // set padding to 0 for wrapping indicator as title
+                tabView.setPadding(0, tabView.getPaddingTop(), 0, tabView.getPaddingBottom());
+                // setting custom margin between tabs
+                if (tabView.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) tabView.getLayoutParams();
+                    if (i == 0) {
+                        // left
+                        setMargin(layoutParams, externalMargin, internalMargin);
+                    } else if (i == childCount - 1) {
+                        // right
+                        setMargin(layoutParams, internalMargin, externalMargin);
+                    } else {
+                        // internal
+                        setMargin(layoutParams, internalMargin, internalMargin);
+                    }
+                }
+            }
+
+            tabLayout.requestLayout();
+        }
+    }
+
+    private void setMargin(ViewGroup.MarginLayoutParams layoutParams, int start, int end) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            layoutParams.setMarginStart(start);
+            layoutParams.setMarginEnd(end);
+        } else {
+            layoutParams.leftMargin = start;
+            layoutParams.rightMargin = end;
         }
     }
 }

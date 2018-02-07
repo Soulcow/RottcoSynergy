@@ -5,10 +5,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-/**
- * Created by boghi on 12/18/2017.
- */
-
 @Entity
 public class GasStation {
     @PrimaryKey

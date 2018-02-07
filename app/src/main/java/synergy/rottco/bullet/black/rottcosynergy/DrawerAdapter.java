@@ -1,10 +1,6 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
-
-/**
- * Created by boghi on 12/9/2017.
- */
 
 public class DrawerAdapter extends BaseAdapter{
 

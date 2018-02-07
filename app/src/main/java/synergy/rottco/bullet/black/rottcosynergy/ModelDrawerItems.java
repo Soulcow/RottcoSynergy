@@ -1,9 +1,5 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
-/**
- * Created by boghi on 12/9/2017.
- */
-
 public class ModelDrawerItems {
     public static int TITLE =-3;
     public static int IMAGE =-2;

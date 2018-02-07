@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-/**
- * Created by boghi on 12/6/2017.
- */
-
 public class Support extends Activity {
 
     @Override

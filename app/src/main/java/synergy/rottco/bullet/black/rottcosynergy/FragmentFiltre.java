@@ -1,13 +1,11 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
-
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,10 +31,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-/**
- * Created by boghi on 1/3/2018.
- */
 
 public class FragmentFiltre extends Fragment {
 
@@ -238,18 +232,18 @@ public class FragmentFiltre extends Fragment {
         });
     }
 
-    private void setupViewPager(ViewPager viewPager)
-    {
-        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getActivity().getFragmentManager());
- adapter.addFragment(new Tab1Fragment(),"Tab1");
-        adapter.addFragment(new Tab2Fragment(),"Tab2");
-
-        adapter.addFragment(new Tab3Fragment(),"Tab3");
-        adapter.addFragment(new Tab4Fragment(),"Tab4");
-        viewPager.setAdapter(adapter);
-
-
-    }
+//    private void setupViewPager(ViewPager viewPager)
+//    {
+//        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getActivity().getFragmentManager());
+// adapter.addFragment(new Tab1Fragment(),"Tab1");
+//        adapter.addFragment(new Tab2Fragment(),"Tab2");
+//
+//        adapter.addFragment(new Tab3Fragment(),"Tab3");
+//        adapter.addFragment(new Tab4Fragment(),"Tab4");
+//        viewPager.setAdapter(adapter);
+//
+//
+//    }
     private void DisplayProfileData(ModelUser user) {
         tvProfileEmail.setText(user.getEmail());
 

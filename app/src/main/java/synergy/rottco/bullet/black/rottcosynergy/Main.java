@@ -33,7 +33,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -54,10 +53,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-/**
- * Created by boghi on 12/5/2017.
- */
 
 public class Main extends AppCompatActivity implements OnMapReadyCallback {
     private List<ModelDrawerItems> dataSource;
@@ -270,29 +265,48 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Log.e(TAG,marker.getSnippet());
-                Toast.makeText(getApplicationContext(),"Work in progress!",Toast.LENGTH_LONG).show();
-                return true;
-//                for(int i =0 ;i<ceva.size();i++)
-//                    if(ceva.get(i).getName().equals(marker.getSnippet()))
-//                    {
-//                        Log.e(TAG,"FOUND:" + ceva.get(i).toString());
-//                        Fragment fragment = new FragmentGasStationDetails();
-////        Bundle args = new Bundle();
-////        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-////        fragment.setArguments(args);
-//                        // Insert the fragment by replacing any existing fragment
-//
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("GasStation", marker.getSnippet());
-//
+//                Toast.makeText(getApplicationContext(),"Work in progress!",Toast.LENGTH_LONG).show();
+//                return true;
+                for(int i =0 ;i<ceva.size();i++)
+                    if(ceva.get(i).getName().equals(marker.getSnippet()))
+                    {
+
+                        /*
+                        *
+                // Insert the fragment by replacing any existing fragment
+                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.content_frame, fragment)
+//                        .commit();
+
+
+                mFragmentManager = getFragmentManager();
+                FragmentTransaction ft = mFragmentManager.beginTransaction();
+                ft.addToBackStack("tagOfFragment");
+                ft.add(R.id.content_frame, fragment);
+                ft.commit();
+                        * */
+                        Log.e(TAG,"FOUND:" + ceva.get(i).toString());
+                        Fragment fragment = new FragmentGasStationDetails();
+
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("GasStation", marker.getSnippet());
+                        fragment.setArguments(bundle);
 //                        FragmentManager fragmentManager = getFragmentManager();
 //                        fragment.setArguments(bundle);
 //                        fragmentManager.beginTransaction()
 //                                .add(R.id.content_frame, fragment)
 //                                .commit();
-//                    }
 
-               // return true;
+                        mFragmentManager = getFragmentManager();
+                        FragmentTransaction ft = mFragmentManager.beginTransaction();
+                        ft.addToBackStack("tagOfFragment");
+                        ft.add(R.id.content_frame, fragment);
+                        ft.commit();
+                    }
+
+                return true;
             }
         });
     }
@@ -617,6 +631,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             try {
                 JSONObject jsonObject = new JSONObject(gasStationsList[i].getName());
                 String imageNameUrl ;
+                Log.e(TAG+" HERE",jsonObject.toString());
                 if(!jsonObject.isNull("image_name"))
                 {
                     gasStations.add(
@@ -628,9 +643,9 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
                                     jsonObject.getString("work_hours"),
                                     jsonObject.getString("fleet_cards"),
                                     jsonObject.getString("image_name"),
-                                    null,
-                                    null,
-                                    null
+                                    jsonObject.getString("services"),
+                                    jsonObject.getString("fuels"),
+                                    jsonObject.getString("cards")
                             )
                     );
                 }
@@ -645,9 +660,9 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
                                     jsonObject.getString("work_hours"),
                                     jsonObject.getString("fleet_cards"),
                                     null,
-                                    null,
-                                    null,
-                                    null
+                                    jsonObject.getString("services"),
+                                    jsonObject.getString("fuels"),
+                                    jsonObject.getString("cards")
                             )
                     );
                 }

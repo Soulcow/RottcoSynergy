@@ -7,10 +7,6 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-/**
- * Created by boghi on 12/17/2017.
- */
-
 @Dao
 public interface MyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

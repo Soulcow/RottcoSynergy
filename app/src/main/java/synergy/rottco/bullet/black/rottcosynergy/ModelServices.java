@@ -1,9 +1,5 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
-/**
- * Created by boghi on 12/18/2017.
- */
-
 public class ModelServices {
     private int Numar;
     private String Service;

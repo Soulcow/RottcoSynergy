@@ -9,10 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-/**
- * Created by boghi on 12/10/2017.
- */
-
 public class FragmentSupport extends Fragment {
 
     @Nullable

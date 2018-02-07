@@ -5,10 +5,6 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-/**
- * Created by boghi on 1/2/2018.
- */
-
 public class ModelGasStation implements Parcelable{
     private String name;
     private String address;
@@ -17,9 +13,9 @@ public class ModelGasStation implements Parcelable{
     private String workHours;
     private String fleetCards;
     private String imageUrl;
-    private ArrayList<String> services;
-    private ArrayList<String> fuels;
-    private ArrayList<String> cards;
+    private String services;
+    private String fuels;
+    private String cards;
 
     public ModelGasStation() {
     }
@@ -32,7 +28,7 @@ public class ModelGasStation implements Parcelable{
         this.imageUrl = imageUrl;
     }
 
-    public ModelGasStation(String name, String address, double latitude, double longitude, String workHours, String fleetCards,String imageUrl, ArrayList<String> services, ArrayList<String> fuels, ArrayList<String> cards) {
+    public ModelGasStation(String name, String address, double latitude, double longitude, String workHours, String fleetCards,String imageUrl, String services, String fuels, String cards) {
         this.name = name;
         this.address = address;
         this.latitude = latitude;
@@ -93,27 +89,27 @@ public class ModelGasStation implements Parcelable{
         this.fleetCards = fleetCards;
     }
 
-    public ArrayList<String> getServices() {
+    public String getServices() {
         return services;
     }
 
-    public void setServices(ArrayList<String> services) {
+    public void setServices(String services) {
         this.services = services;
     }
 
-    public ArrayList<String> getFuels() {
+    public String getFuels() {
         return fuels;
     }
 
-    public void setFuels(ArrayList<String> fuels) {
+    public void setFuels(String fuels) {
         this.fuels = fuels;
     }
 
-    public ArrayList<String> getCards() {
+    public String getCards() {
         return cards;
     }
 
-    public void setCards(ArrayList<String> cards) {
+    public void setCards(String cards) {
         this.cards = cards;
     }
 
@@ -154,9 +150,9 @@ public class ModelGasStation implements Parcelable{
         longitude = in.readDouble();
         workHours = in.readString();
         fleetCards= in.readString();
-        services = in.createStringArrayList();
-        fuels= in.createStringArrayList();
-        cards= in.createStringArrayList();
+        services = in.readString();
+        fuels= in.readString();
+        cards= in.readString();
         /*
         * private String name;
     private String address;

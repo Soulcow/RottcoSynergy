@@ -13,10 +13,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-/**
- * Created by boghi on 1/15/2018.
- */
-
 public class ListViewAdapter extends BaseAdapter {
     private static String TAG = ListViewAdapter.class.getSimpleName();
     private Context context;

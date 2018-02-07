@@ -1,9 +1,5 @@
 package synergy.rottco.bullet.black.rottcosynergy;
 
-/**
- * Created by boghi on 12/11/2017.
- */
-
 public class ModelUser {
     private String firstName;
     private String lastName;
