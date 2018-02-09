@@ -1,80 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:padding="20dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="40"
-            android:text="Servicii"
-            android:textStyle="bold"
-            android:textColor="@color/md_black_1000"
-
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
-
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:src="@drawable/magazin"
-            android:padding="20dp"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:padding="20dp"
-            android:gravity="center"
-            android:text="Magazin"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-    <LinearLayout
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/md_black_1000"
+        android:text="Servicii"
+        android:id="@+id/tvTab1Servicii"
+        android:layout_height="wrap_content" />
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
-
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:src="@drawable/sendvis"
-            android:padding="20dp"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:padding="20dp"
-            android:gravity="center"
-            android:text="Sendvis preambalat"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-    <LinearLayout
+        android:src="@drawable/magazin"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/tvTab1Servicii"
+        android:id="@+id/ivTab1Magazin"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal"
+        android:layout_toEndOf="@id/ivTab1Magazin"
+        android:layout_alignTop="@+id/ivTab1Magazin"
+        android:layout_alignBottom="@+id/ivTab1Magazin"
+        android:text="Magazin"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
 
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:src="@drawable/restaurant"
-            android:padding="20dp"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:padding="20dp"
-            android:gravity="center"
-            android:text="Restaurant"
-            android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/sandvis"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Magazin"
+        android:id="@+id/ivTab1Sandwich"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
 
-    </LinearLayout>
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Sandwich"
+        android:layout_alignTop="@+id/ivTab1Sandwich"
+        android:layout_alignBottom="@+id/ivTab1Sandwich"
+        android:text="Sandwich preambalat"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/restaurant"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Sandwich"
+        android:id="@+id/ivTab1Restaurant"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Restaurant"
+        android:layout_alignTop="@+id/ivTab1Restaurant"
+        android:layout_alignBottom="@+id/ivTab1Restaurant"
+        android:text="Restaurant"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/cazare"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Restaurant"
+        android:id="@+id/ivTab1Cazare"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Cazare"
+        android:layout_alignTop="@+id/ivTab1Cazare"
+        android:layout_alignBottom="@+id/ivTab1Cazare"
+        android:text="Cazare"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/cafeaproaspatprajita"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Cazare"
+        android:id="@+id/ivTab1CafeaPP"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1CafeaPP"
+        android:layout_alignTop="@+id/ivTab1CafeaPP"
+        android:layout_alignBottom="@+id/ivTab1CafeaPP"
+        android:text="Cafea proaspat prajita"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/automatcafea"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1CafeaPP"
+        android:id="@+id/ivTab1AutomatCafea"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1AutomatCafea"
+        android:layout_alignTop="@+id/ivTab1AutomatCafea"
+        android:layout_alignBottom="@+id/ivTab1AutomatCafea"
+        android:text="Automat Cafea"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/spalatorieauto"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1AutomatCafea"
+        android:id="@+id/ivTab1SpalatorieAutomata"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1SpalatorieAutomata"
+        android:layout_alignTop="@+id/ivTab1SpalatorieAutomata"
+        android:layout_alignBottom="@+id/ivTab1SpalatorieAutomata"
+        android:text="Spalatorie auto automata"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/spalatoriecujet"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1SpalatorieAutomata"
+        android:id="@+id/ivTab1SpalatorieJet"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1SpalatorieJet"
+        android:layout_alignTop="@+id/ivTab1SpalatorieJet"
+        android:layout_alignBottom="@+id/ivTab1SpalatorieJet"
+        android:text="Spalatorie cu jet"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/aercompresor"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1SpalatorieJet"
+        android:id="@+id/ivTab1Compresor"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Compresor"
+        android:layout_alignTop="@+id/ivTab1Compresor"
+        android:layout_alignBottom="@+id/ivTab1Compresor"
+        android:text="Aer / Compresor"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/lubrifiant"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Compresor"
+        android:id="@+id/ivTab1Lubrifiant"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Lubrifiant"
+        android:layout_alignTop="@+id/ivTab1Lubrifiant"
+        android:layout_alignBottom="@+id/ivTab1Lubrifiant"
+        android:text="Lubrifianti"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/internetwifi"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Lubrifiant"
+        android:id="@+id/ivTab1Internet"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Internet"
+        android:layout_alignTop="@+id/ivTab1Internet"
+        android:layout_alignBottom="@+id/ivTab1Internet"
+        android:text="Internet (Wifi)"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/vinietaautostradaromania"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Internet"
+        android:id="@+id/ivTab1VinietaRomania"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1VinietaRomania"
+        android:layout_alignTop="@+id/ivTab1VinietaRomania"
+        android:layout_alignBottom="@+id/ivTab1VinietaRomania"
+        android:text="Vigneta autostrada Romania"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
