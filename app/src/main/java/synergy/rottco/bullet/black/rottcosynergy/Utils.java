@@ -72,4 +72,9 @@ public class Utils {
         return BaseUrlTest+LogoutUrl;
     }
 
+    /*
+    *LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(context);
+    *Intent localIntent = new Intent(“CUSTOM_ACTION”);
+    * localBroadcastManager.sendBroadcast(localIntent);
+    * */
 }

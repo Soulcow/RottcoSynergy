@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content">
@@ -12,125 +12,298 @@
     <TextView
         android:layout_width="match_parent"
         android:text="@string/whatDistance"
+        android:id="@+id/tvFilterQuestionDistance"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvFiltertextView"
         android:layout_margin="20dp"
         android:layout_width="wrap_content"
+        android:layout_below="@+id/tvFilterQuestionDistance"
         android:layout_height="wrap_content"/>
 
     <SeekBar
         android:id="@+id/seekBar"
         android:max="100"
         android:progress="50"
+        android:layout_below="@+id/tvFiltertextView"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
+        android:layout_below="@+id/seekBar"
         android:layout_width="match_parent"
         android:text="@string/whatServices"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
+        android:id="@+id/tvWhatServices"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:textColor="@color/md_black_1000"
         android:textSize="16sp"
         android:layout_height="wrap_content" />
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="10dp"
-        android:drawableStart="@drawable/coffeemachine"
-        android:text="@string/automatDeCafea"
+        android:src="@drawable/magazin"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/tvWhatServices"
+        android:id="@+id/ivTab1Magazin"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content" />
     <TextView
         android:layout_width="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="10dp"
-        android:drawableStart="@drawable/coffeemachine"
-        android:text="@string/automatDeCeai"
+        android:layout_toEndOf="@id/ivTab1Magazin"
+        android:layout_alignTop="@+id/ivTab1Magazin"
+        android:layout_alignBottom="@+id/ivTab1Magazin"
+        android:text="Magazin"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/sandvis"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Magazin"
+        android:id="@+id/ivTab1Sandwich"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:drawableStart="@drawable/coffeeicon"
-        android:text="@string/cafeaProaspat"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/ivTab1Sandwich"
+        android:layout_alignTop="@+id/ivTab1Sandwich"
+        android:layout_alignBottom="@+id/ivTab1Sandwich"
+        android:text="Sandwich preambalat"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/restaurant"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Sandwich"
+        android:id="@+id/ivTab1Restaurant"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_marginStart="15dp"
-        android:drawableStart="@drawable/restaurantred"
-        android:text="@string/restaurant"
+        android:layout_toEndOf="@id/ivTab1Restaurant"
+        android:layout_alignTop="@+id/ivTab1Restaurant"
+        android:layout_alignBottom="@+id/ivTab1Restaurant"
+        android:text="Restaurant"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/cazare"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Restaurant"
+        android:id="@+id/ivTab1Cazare"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_marginStart="15dp"
-        android:drawableStart="@drawable/restaurant"
-        android:text="@string/sandwichuriPreambalate"
+        android:layout_toEndOf="@id/ivTab1Cazare"
+        android:layout_alignTop="@+id/ivTab1Cazare"
+        android:layout_alignBottom="@+id/ivTab1Cazare"
+        android:text="Cazare"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/cafeaproaspatprajita"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Cazare"
+        android:id="@+id/ivTab1CafeaPP"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_marginStart="15dp"
-        android:drawableStart="@drawable/magazin"
-        android:text="@string/superMarket"
+        android:layout_toEndOf="@id/ivTab1CafeaPP"
+        android:layout_alignTop="@+id/ivTab1CafeaPP"
+        android:layout_alignBottom="@+id/ivTab1CafeaPP"
+        android:text="Cafea proaspat prajita"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/automatcafea"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1CafeaPP"
+        android:id="@+id/ivTab1AutomatCafea"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_marginStart="15dp"
-        android:drawableStart="@drawable/shape"
-        android:text="@string/superMarket"
+        android:layout_toEndOf="@id/ivTab1AutomatCafea"
+        android:layout_alignTop="@+id/ivTab1AutomatCafea"
+        android:layout_alignBottom="@+id/ivTab1AutomatCafea"
+        android:text="Automat Cafea"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/spalatorieauto"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1AutomatCafea"
+        android:id="@+id/ivTab1SpalatorieAutomata"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1SpalatorieAutomata"
+        android:layout_alignTop="@+id/ivTab1SpalatorieAutomata"
+        android:layout_alignBottom="@+id/ivTab1SpalatorieAutomata"
+        android:text="Spalatorie auto automata"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/spalatoriecujet"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1SpalatorieAutomata"
+        android:id="@+id/ivTab1SpalatorieJet"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1SpalatorieJet"
+        android:layout_alignTop="@+id/ivTab1SpalatorieJet"
+        android:layout_alignBottom="@+id/ivTab1SpalatorieJet"
+        android:text="Spalatorie cu jet"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/aercompresor"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1SpalatorieJet"
+        android:id="@+id/ivTab1Compresor"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Compresor"
+        android:layout_alignTop="@+id/ivTab1Compresor"
+        android:layout_alignBottom="@+id/ivTab1Compresor"
+        android:text="Aer / Compresor"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/lubrifiant"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Compresor"
+        android:id="@+id/ivTab1Lubrifiant"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Lubrifiant"
+        android:layout_alignTop="@+id/ivTab1Lubrifiant"
+        android:layout_alignBottom="@+id/ivTab1Lubrifiant"
+        android:text="Lubrifianti"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/internetwifi"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Lubrifiant"
+        android:id="@+id/ivTab1Internet"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_toEndOf="@id/ivTab1Internet"
+        android:layout_alignTop="@+id/ivTab1Internet"
+        android:layout_alignBottom="@+id/ivTab1Internet"
+        android:text="Internet (Wifi)"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/vinietaautostradaromania"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1Internet"
+        android:id="@+id/ivTab1VinietaRomania"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content" />
 
     <TextView
         android:layout_width="match_parent"
         android:text="@string/whatPayment"
         android:textStyle="bold"
+        android:layout_below="@+id/ivTab1VinietaRomania"
         android:textColor="@color/md_black_1000"
         android:textSize="20sp"
         android:layout_height="wrap_content" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/Maestro"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/MasterCard"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/MasterCardGold"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/MasterCardPlatinum"
-        android:layout_height="wrap_content" />
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/Maestro"-->
+        <!--android:layout_height="wrap_content" />-->
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/MasterCard"-->
+        <!--android:layout_height="wrap_content" />-->
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/MasterCardGold"-->
+        <!--android:layout_height="wrap_content" />-->
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/MasterCardPlatinum"-->
+        <!--android:layout_height="wrap_content" />-->
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/Visa"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/VisaElectron"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/VisaGold"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/VisaInfinit"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:text="@string/VisaPlatinum"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/Visa"-->
+        <!--android:layout_height="wrap_content" />-->
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/VisaElectron"-->
+        <!--android:layout_height="wrap_content" />-->
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/VisaGold"-->
+        <!--android:layout_height="wrap_content" />-->
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/VisaInfinit"-->
+        <!--android:layout_height="wrap_content" />-->
+    <!--<CheckBox-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:text="@string/VisaPlatinum"-->
+        <!--android:layout_height="wrap_content" />-->
+</RelativeLayout>
 </ScrollView>

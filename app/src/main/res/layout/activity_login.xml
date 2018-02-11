@@ -85,6 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rememberMe"
+                android:id="@+id/cbRememberMe"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/etPassword" />

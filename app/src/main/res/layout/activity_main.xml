@@ -23,6 +23,12 @@
                 android:layout_height="match_parent"
                 tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:src="@drawable/filter"
+                android:id="@+id/ivMainFilters"
+                android:layout_height="wrap_content" />
         </FrameLayout>
         <!-- The navigation drawer -->
         <ListView

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -79,12 +82,22 @@ public class Login extends Activity {
     private Button bLogin;
     private TextView tvSignUp;
     private CallbackManager callbackManager;
+    private CheckBox cbRememberMe;
+    private boolean isCbChecked=false;
 
+    private static String AUTH_KEY_SP = "authKeySP";
+    private static String REMEMBER_ME_SP = "remember_me";
+    public static final String SHARED_PREFERENCES = "Global" ;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if(isRememberMeChecked())
+        {
+            startActivity(new Intent(Login.this,Main.class));
+            Login.this.finish();
+        }
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             Log.e(TAG,"REQUEST PERMISION");
@@ -98,6 +111,20 @@ public class Login extends Activity {
 
         callbackManager = CallbackManager.Factory.create();
 
+        cbRememberMe = findViewById(R.id.cbRememberMe);
+        cbRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked)
+                {
+                    isCbChecked=true;
+                }
+                else
+                {
+                    isCbChecked=false;
+                }
+            }
+        });
         localTvQuestion = findViewById(R.id.localTvQuestion);
         localTvQuestion.setText(Html.fromHtml("Nu ai un cont Synergy inca? " + "<font color=\"#BB0020\">" + "Sign-up" + "</font>" )  );
         localTvQuestion.setOnClickListener(new View.OnClickListener() {
@@ -362,6 +389,7 @@ public class Login extends Activity {
                             db.myDao().insertUser(new User(authKey,userData));
                             Utils.setAuthKey(authKey);
                             startActivity(new Intent(Login.this,Main.class));
+                            rememberMeFunctionality(authKey);
                             Login.this.finish();
                         }
                         else if(status == STATUS_USER_PASSWORD_INCORRECT)
@@ -396,6 +424,55 @@ public class Login extends Activity {
                 }
             }
         });
+
+    }
+
+    private void rememberMeFunctionality(String authKey) {
+        if(isCbChecked)
+        {
+            Log.e(TAG,"Remember Me checkbox is checked");
+            savedDataToSharedPreferences(true,authKey);
+        }
+        else
+        {
+            Log.e(TAG,"Remember Me checkbox is NOT checked");
+            savedDataToSharedPreferences(false,authKey);
+        }
+    }
+
+    private void savedDataToSharedPreferences(boolean saveSharedPreferences,String authKey) {
+        SharedPreferences sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        if(saveSharedPreferences)
+        {
+
+            editor.putBoolean(REMEMBER_ME_SP,true);
+            editor.putString(AUTH_KEY_SP, authKey);
+            editor.commit();
+        }
+        else
+        {
+            editor.putBoolean(REMEMBER_ME_SP,false);
+            editor.putString(AUTH_KEY_SP, authKey);
+            editor.commit();
+        }
+
+    }
+
+    private boolean isRememberMeChecked()
+    {
+        SharedPreferences sharedpreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+
+        boolean is =sharedpreferences.getBoolean(REMEMBER_ME_SP, false);
+        if(is)
+        {
+            String authKey = sharedpreferences.getString(AUTH_KEY_SP, null);
+            Utils.setAuthKey(authKey);
+            return true;
+        }
+        return false;
+
+
 
     }
 

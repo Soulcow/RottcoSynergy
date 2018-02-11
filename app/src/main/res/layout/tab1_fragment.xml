@@ -237,4 +237,132 @@
         android:layout_marginStart="20dp"
         android:gravity="center_vertical"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/ivTab1VinietaRomania"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/md_black_1000"
+        android:text="Produse"
+        android:id="@+id/tvTab1Produse"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_below="@+id/tvTab1Produse"
+        android:orientation="horizontal"
+        android:id="@+id/llTab1One"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@color/md_black_1000"
+            android:background="@drawable/rectangle_combustibil"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="5dp"
+            android:text="Benzina\nFara Plumb 95"
+            android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:textColor="@color/md_black_1000"
+                android:background="@drawable/rectangle_combustibil"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:text="Benzina\nFara Plumb 98/99"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/llTab1One"
+        android:orientation="horizontal"
+        android:id="@+id/llTab1Two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:textColor="@color/md_black_1000"
+                android:background="@drawable/rectangle_combustibil"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:text="Motorina Standard"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:textColor="@color/md_black_1000"
+                android:background="@drawable/rectangle_combustibil"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:text="Motorina Superioara"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_below="@+id/llTab1Two"
+        android:orientation="horizontal"
+        android:id="@+id/llTab1Three"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:textColor="@color/md_black_1000"
+                android:background="@drawable/rectangle_combustibil"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:text="GPL"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:textColor="@color/md_black_1000"
+                android:background="@drawable/rectangle_combustibil"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:text="AdBlue"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>

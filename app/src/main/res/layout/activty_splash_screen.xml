@@ -1,11 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/md_white_1000"
     android:layout_height="match_parent">
-
-    <Button
-        android:id="@+id/bSkipSplashScreen"
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
-</LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/splash_screen_synergy"
+        android:id="@+id/ivSplash_screen_synergy"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/splash_screen_by_rottco"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ivsplash_screen_by_rottco"
+        android:layout_below="@+id/ivSplash_screen_synergy"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/splash_screen_icon"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ivsplash_screen_icon"
+        android:layout_below="@+id/ivsplash_screen_by_rottco"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/splash_screen_black_red"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ivsplash_screen_black_red"
+        android:layout_below="@+id/ivsplash_screen_icon"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/splash_screen_iter_conex"
+        android:id="@+id/ivsplash_screen_iter_conex"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ivsplash_screen_black_red"
+        />
+
+    <ImageView
+        android:id="@+id/ivsplash_screen_reteaua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivsplash_screen_iter_conex"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="20dp"
+        android:src="@drawable/splash_screen_reteaua" />
+
+
+</RelativeLayout>

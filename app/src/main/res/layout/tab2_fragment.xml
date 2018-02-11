@@ -17,6 +17,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_weight="40"
+            android:id="@+id/Tab2TvAddress"
             android:text="Unknown"
             android:textColor="@color/md_black_1000"
             android:layout_height="wrap_content" />
@@ -37,6 +38,7 @@
             android:layout_width="0dp"
             android:layout_weight="40"
             android:text="Unknown"
+            android:id="@+id/Tab2TvLatLong"
             android:textColor="@color/md_black_1000"
             android:layout_height="wrap_content" />
 
@@ -56,6 +58,7 @@
             android:layout_width="0dp"
             android:layout_weight="40"
             android:text="Unknown"
+            android:id="@+id/Tab2TvWorkHours"
             android:textColor="@color/md_black_1000"
             android:layout_height="wrap_content" />
 
@@ -76,6 +79,7 @@
             android:layout_width="0dp"
             android:layout_weight="40"
             android:text="Unknown"
+            android:id="@+id/Tab2TvPhone"
             android:textColor="@color/md_black_1000"
             android:layout_height="wrap_content" />
 

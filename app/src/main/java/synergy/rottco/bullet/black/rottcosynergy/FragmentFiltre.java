@@ -62,16 +62,16 @@ public class FragmentFiltre extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_filtre, container, false);
 
-        String gasStation = getArguments().getString("GasStation");
-
-
-
-
-               DatabaseSingleton dbs = new DatabaseSingleton(getActivity());
-        AppDatabase db = dbs.getDbSingleton();
-        getGasStations(db);
-
-        new AsynkTaskLoadFromDatabase(getActivity(),gasStation).execute();
+//        String gasStation = getArguments().getString("GasStation");
+//
+//
+//
+//
+//               DatabaseSingleton dbs = new DatabaseSingleton(getActivity());
+//        AppDatabase db = dbs.getDbSingleton();
+//        getGasStations(db);
+//
+//        new AsynkTaskLoadFromDatabase(getActivity(),gasStation).execute();
 
 
         // set a change listener on the SeekBar
@@ -79,7 +79,7 @@ public class FragmentFiltre extends Fragment {
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
 
         int progress = seekBar.getProgress();
-        tvProgressLabel = view.findViewById(R.id.textView);
+        tvProgressLabel = view.findViewById(R.id.tvFiltertextView);
         tvProgressLabel.setText("Progress: " + progress);
 
 

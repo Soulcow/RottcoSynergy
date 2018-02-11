@@ -74,13 +74,13 @@ public class FragmentGasStationDetails extends Fragment {
 
     private OkHttpClient client = null;
 
-
+    private View viewToPass;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gas_station_details, container, false);
-
+        viewToPass = view;
         String gasStation = getArguments().getString("GasStation");
 
         tvFGSDname = view.findViewById(R.id.tvFGSDname);
@@ -136,7 +136,7 @@ public class FragmentGasStationDetails extends Fragment {
         mTabLayout.setupWithViewPager(viewPager);
         * */
 
-        setupViewPager(view);
+
         return view;
     }
 
@@ -274,7 +274,7 @@ public class FragmentGasStationDetails extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
     }
-    private void setupViewPager(View view)
+    private void setupViewPager(View view, ModelGasStation modelGasStation)
     {
 //        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getActivity().getFragmentManager());
 //        adapter.addFragment(new Tab1Fragment(),TAB_1_NAME);
@@ -291,7 +291,7 @@ public class FragmentGasStationDetails extends Fragment {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
-        final SectionsPagerAdapter adapter = new SectionsPagerAdapter(getActivity().getFragmentManager(), tabLayout.getTabCount());
+        final SectionsPagerAdapter adapter = new SectionsPagerAdapter(getActivity().getFragmentManager(), tabLayout.getTabCount(),modelGasStation);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -355,13 +355,16 @@ public class FragmentGasStationDetails extends Fragment {
                         {
                             Log.e(TAG,ceva.get(i).toString());
                             tvFGSDname.setText(ceva.get(i).getName());
-                            if(ceva.get(i).getImageUrl()!=null)
+                            //if(ceva.get(i).getImageUrl()!=null)
                             Picasso.with(context)
                                     .load(ceva.get(i).getImageUrl())
+                                    .placeholder(R.drawable.placeholder_benzinarie)
 //                                    .fit().centerCrop()
                                     .into(ivImageUrl);
 
                             ivNavigation.setOnClickListener(openWazeNavigation(ceva.get(i).getLatitude(),ceva.get(i).getLongitude()));
+
+                            setupViewPager(viewToPass,ceva.get(i));
                         }
 
                 }
